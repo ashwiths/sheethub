@@ -69,16 +69,8 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop CTA (Right) */}
+          {/* Desktop CTA (Right) - Removed as requested */}
           <div className="w-1/3 hidden md:flex items-center justify-end">
-            <motion.a
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              href="/#tools"
-              className="px-6 py-2.5 text-sm font-semibold text-white bg-violet-600 rounded-full hover:bg-violet-700 hover:shadow-lg hover:shadow-violet-300/50 transition-colors"
-            >
-              Start using tools
-            </motion.a>
           </div>
 
           {/* Mobile Hamburger */}
@@ -111,14 +103,7 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <div className="mt-3 flex flex-col gap-2">
-              <a
-                href="/#tools"
-                className="px-4 py-3 text-sm font-semibold text-center text-white bg-violet-600 rounded-full"
-              >
-                Start using tools
-              </a>
-            </div>
+            {/* Mobile CTA - Removed as requested */}
           </motion.div>
         )}
       </AnimatePresence>
