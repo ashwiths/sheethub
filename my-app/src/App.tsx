@@ -41,6 +41,8 @@ const CropPdfPage         = lazy(() => import("./pages/CropPdfPage"));
 const AiSummarizerPage    = lazy(() => import("./pages/AiSummarizerPage"));
 const TranslatePdfPage    = lazy(() => import("./pages/TranslatePdfPage"));
 
+import ScrollToTop from "./components/ScrollToTop";
+
 // Suspense fallback — subtle spinner
 function PageLoader() {
   return (
@@ -74,6 +76,7 @@ function PageLoader() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1 flex flex-col">

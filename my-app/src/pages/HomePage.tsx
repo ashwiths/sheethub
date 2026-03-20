@@ -8,7 +8,6 @@ import {
   Globe,
   Layers,
   Star,
-  ChevronRight,
   UploadCloud,
   Settings,
   Download,
@@ -80,20 +79,14 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          className="flex justify-center w-full mt-4"
         >
-          <Link
-            to="/#tools"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 bg-[#0F172A] hover:bg-[#1E293B] text-white rounded-full font-semibold text-[14px] transition-all shadow-xl shadow-slate-900/20 hover:-translate-y-0.5"
+          <a
+            href="#tools"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#0F172A] hover:bg-[#1E293B] text-white rounded-full font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:-translate-y-1"
           >
-            Explore All Tools <ArrowRight size={16} />
-          </Link>
-          <Link
-            to="/merge-pdf"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-full font-semibold text-[14px] transition-all shadow-sm hover:-translate-y-0.5"
-          >
-            Merge PDF <ChevronRight size={16} className="text-gray-400" />
-          </Link>
+            Get Started Free <ArrowRight size={18} />
+          </a>
         </motion.div>
       </div>
     </section>
@@ -151,14 +144,10 @@ function ToolsSection() {
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
         >
-          {filtered.map((tool, i) => (
+          {filtered.map((tool) => (
             <motion.div
               key={tool.id}
               layout
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.5), ease: "easeOut" }}
             >
               <ToolCard tool={tool} />
             </motion.div>
