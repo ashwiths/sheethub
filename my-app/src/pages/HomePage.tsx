@@ -120,7 +120,7 @@ function HeroSearchBar() {
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden isolate flex flex-col items-center text-center">
+    <section className="relative pt-36 pb-20 lg:pt-44 lg:pb-24 overflow-hidden isolate flex flex-col items-center text-center">
       {/* Background blobs simulating the soft gradient glow */}
       <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-fuchsia-100/60 rounded-full blur-[120px] -z-10 mix-blend-multiply" />
       <div className="absolute top-32 left-0 w-[500px] h-[500px] bg-violet-100/50 rounded-full blur-[120px] -z-10 mix-blend-multiply" />
@@ -146,7 +146,7 @@ function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="text-[40px] sm:text-[56px] lg:text-[68px] font-extrabold text-[#111827] leading-[1.05] tracking-tight mb-4"
+          className="text-[40px] sm:text-[56px] lg:text-[68px] font-extrabold text-[#111827] leading-[1.05] tracking-tight mb-4 text-center"
         >
           Do more with your PDFs,
           <br />
@@ -174,20 +174,6 @@ function Hero() {
         {/* Hero Search Bar */}
         <HeroSearchBar />
 
-        {/* Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-          className="flex justify-center w-full"
-        >
-          <a
-            href="#tools"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#0F172A] hover:bg-[#1E293B] text-white rounded-full font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:-translate-y-1"
-          >
-            Get Started Free <ArrowRight size={18} />
-          </a>
-        </motion.div>
       </div>
     </section>
   );
