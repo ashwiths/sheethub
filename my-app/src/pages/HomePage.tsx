@@ -414,6 +414,30 @@ const faqs = [
   {
     question: "Can I use SheetHub on my mobile phone?",
     answer: "Yes, our user interface is completely responsive. You can merge, split, and compress PDFs right from your iPhone, iPad, or Android device."
+  },
+  {
+    question: "Is there a limit to the file size I can upload?",
+    answer: "Our platform is designed to handle large files efficiently. Currently, you can process files up to 100MB completely free, without any compromise in processing speed."
+  },
+  {
+    question: "Will my processed PDFs have watermarks?",
+    answer: "Never. We don't believe in holding your documents hostage. Any file you process with SheetHub will be 100% watermark-free, preserving your original document's integrity."
+  },
+  {
+    question: "What languages do your tools support?",
+    answer: "Our tools can process PDFs containing text in any language, supporting full Unicode character sets, making it perfect for international teams and localized documents."
+  },
+  {
+    question: "Can I use SheetHub offline?",
+    answer: "Currently, SheetHub requires an internet connection since we use advanced cloud-based processing for a few complex tools. However, for most tasks that process locally in your browser, the data usage is minimal once the app initially loads."
+  },
+  {
+    question: "Do you keep a backup copy of my processed files?",
+    answer: "No. Files processed locally in your browser never leave your device. If a tool utilizes our cloud servers, the file is securely encrypted, temporarily processed, and instantly scheduled for permanent deletion within 2 hours."
+  },
+  {
+    question: "How can I suggest a new feature or PDF tool?",
+    answer: "We'd love to hear from you! We are constantly expanding SheetHub based on user feedback. Feel free to contact our support team with your ideas and feature requests."
   }
 ];
 
