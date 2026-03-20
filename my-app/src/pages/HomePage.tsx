@@ -13,7 +13,9 @@ import {
   Settings,
   Download,
   Plus,
-  Minus
+  Minus,
+  Beaker,
+  Heart
 } from "lucide-react";
 import ToolCard from "../components/ToolCard";
 import CategoryTabs from "../components/CategoryTabs";
@@ -106,11 +108,10 @@ function TrustedPartners() {
         <p className="text-sm font-semibold text-gray-400 mb-6 uppercase tracking-wider">Trusted by innovative teams worldwide</p>
         <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
           {/* Mock Logos done with text for simplicity but stylized */}
-          <div className="text-2xl font-black text-gray-900 tracking-tighter">ACME Corp</div>
-          <div className="flex items-center gap-1 text-xl font-bold text-blue-900 tracking-tight"><Globe size={20}/> GlobalTech</div>
-          <div className="flex items-center gap-1 text-2xl font-extrabold text-violet-900"><Zap size={20} fill="currentColor"/> Vertex</div>
-          <div className="text-2xl font-bold text-gray-800 tracking-widest uppercase">Pinnacle</div>
-          <div className="flex items-center gap-1 text-xl font-bold text-slate-800"><Shield size={20}/> SecureFlow</div>
+          <a href="https://www.bluelabtech.space/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-2xl font-black text-gray-900 tracking-tighter hover:text-blue-600 transition-colors"><Beaker size={24} className="text-blue-600" /> Bluelabtech</a>
+          <div className="flex items-center gap-1 text-2xl font-extrabold text-violet-900"><Zap size={20} fill="currentColor"/> verter</div>
+          <div className="flex items-center gap-1 text-xl font-bold text-slate-800"><Shield size={20}/> secure flow</div>
+          <a href="https://www.ilovepdf.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-2xl font-bold text-red-600 tracking-tight group-hover:text-red-500 transition-colors hover:text-red-700"><Heart size={24} fill="currentColor" /> ilovepdf</a>
         </div>
       </div>
     </section>
