@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Zap,
@@ -14,11 +14,108 @@ import {
   Plus,
   Minus,
   Beaker,
-  Heart
+  Heart,
+  Search,
+  X
 } from "lucide-react";
 import ToolCard from "../components/ToolCard";
 import CategoryTabs from "../components/CategoryTabs";
 import { tools, categories, type Category } from "../data/tools";
+
+// ─── Hero Search Bar ─────────────────────────────────────────────────────────
+function HeroSearchBar() {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const results = query.trim().length > 0
+    ? tools.filter((t) =>
+        t.name.toLowerCase().includes(query.toLowerCase()) ||
+        t.description.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 5)
+    : [];
+
+  // Close on outside click
+  useState(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  });
+
+  function handleSelect(path: string) {
+    setQuery("");
+    setOpen(false);
+    navigate(path);
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
+      className="relative w-full max-w-lg mx-auto mb-6"
+    >
+      {/* Glow effect behind the bar */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-400/20 via-purple-300/20 to-fuchsia-400/20 blur-xl -z-10 scale-110" />
+
+      <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(109,40,217,0.12)] rounded-2xl px-5 py-3.5 transition-all duration-300 focus-within:shadow-[0_8px_40px_rgba(109,40,217,0.22)] focus-within:border-violet-200">
+        <Search size={18} className="text-violet-400 shrink-0" />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
+          onFocus={() => setOpen(true)}
+          placeholder="Search any tool — merge, compress, convert…"
+          className="flex-1 bg-transparent text-[15px] font-medium text-gray-700 placeholder-gray-400 outline-none"
+        />
+        {query && (
+          <button onClick={() => { setQuery(""); setOpen(false); }} className="text-gray-300 hover:text-gray-500 transition-colors">
+            <X size={15} />
+          </button>
+        )}
+      </div>
+
+      <AnimatePresence>
+        {open && results.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+            transition={{ duration: 0.18 }}
+            className="absolute top-full mt-3 left-0 right-0 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-violet-200/40 border border-gray-100 overflow-hidden z-50"
+          >
+            {results.map((tool, i) => {
+              const Icon = tool.icon;
+              return (
+                <motion.button
+                  key={tool.id}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  onClick={() => handleSelect(tool.path)}
+                  className="w-full flex items-center gap-4 px-5 py-3.5 hover:bg-violet-50 transition-colors text-left group"
+                >
+                  <div className={`w-9 h-9 rounded-xl ${tool.bgColor} flex items-center justify-center shrink-0`}>
+                    <Icon size={16} className={tool.color} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[14px] font-semibold text-gray-800 group-hover:text-violet-700 transition-colors">{tool.name}</p>
+                    <p className="text-[12px] text-gray-400 truncate">{tool.description}</p>
+                  </div>
+                  <ArrowRight size={14} className="text-gray-300 group-hover:text-violet-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+                </motion.button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -74,12 +171,15 @@ function Hero() {
           <span className="block font-bold text-gray-900 mt-1">100% free. No signup.</span>
         </motion.p>
 
-        {/* Buttons */}
+        {/* Hero Search Bar */}
+        <HeroSearchBar />
+
+        {/* Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex justify-center w-full mt-4"
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="flex justify-center w-full"
         >
           <a
             href="#tools"

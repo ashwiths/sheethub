@@ -38,11 +38,11 @@ export default function Navbar() {
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
         <div className="flex items-center justify-between h-20">
-          
+
           {/* Logo */}
           <div className="w-1/3 flex justify-start">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <motion.div 
+              <motion.div
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-8 h-8 bg-violet-600 rounded-[10px] flex items-center justify-center shadow-md shadow-violet-200 transition-shadow group-hover:shadow-violet-400/50"
@@ -69,9 +69,8 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop CTA (Right) - Removed as requested */}
-          <div className="w-1/3 hidden md:flex items-center justify-end">
-          </div>
+          {/* Right Side (empty for now) */}
+          <div className="w-1/3 hidden md:flex items-center justify-end" />
 
           {/* Mobile Hamburger */}
           <button
@@ -103,7 +102,6 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            {/* Mobile CTA - Removed as requested */}
           </motion.div>
         )}
       </AnimatePresence>
