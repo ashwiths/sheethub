@@ -44,3 +44,42 @@ export const mergePDFs = async (files: File[]): Promise<Blob> => {
     throw new Error('Failed to connect to the server');
   }
 };
+
+/**
+ * Sends a PDF file and page numbers to the backend for splitting
+ * @param {File} file - The PDF file to split
+ * @param {string} pages - The pages to extract (e.g., "1-3", "2,5")
+ * @returns {Promise<Blob>} - The split PDF blob
+ */
+export const splitPDF = async (file: File, pages: string): Promise<Blob> => {
+  if (!file) {
+    throw new Error('A PDF file is required.');
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('pages', pages);
+
+  try {
+    const response = await axios.post(`${API_URL}/split`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      responseType: 'blob',
+    });
+
+    return response.data;
+  } catch (error: any) {
+    console.error('API Error:', error);
+    if (error.response && error.response.data instanceof Blob) {
+      const text = await error.response.data.text();
+      try {
+        const json = JSON.parse(text);
+        throw new Error(json.error || 'Failed to split PDF');
+      } catch (e) {
+        throw new Error('Failed to split PDF');
+      }
+    }
+    throw new Error(error.response?.data?.error || 'Failed to connect to the server');
+  }
+};

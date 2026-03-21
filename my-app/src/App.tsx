@@ -11,10 +11,13 @@ const AboutPage           = lazy(() => import("./pages/AboutPage"));
 
 // Lazy loaded tool pages
 const MergePDFPage        = lazy(() => import("./pages/MergePDFPage"));
-const SplitPDFPage        = lazy(() => import("./pages/SplitPDFPage"));
-const CompressPDFPage     = lazy(() => import("./pages/CompressPDFPage"));
+// @ts-ignore - Created as .jsx per requirements
+const SplitPDFPage        = lazy(() => import("./pages/SplitPDF"));
+// @ts-ignore - Created as .jsx per requirements
+const CompressPDFPage     = lazy(() => import("./pages/CompressPDF"));
 const RotatePDFPage       = lazy(() => import("./pages/RotatePDFPage"));
-const PdfToWordPage       = lazy(() => import("./pages/PdfToWordPage"));
+// @ts-ignore - Created as .jsx per requirements
+const PdfToWordPage       = lazy(() => import("./pages/PdfToWord"));
 const PdfToImagePage      = lazy(() => import("./pages/PdfToImagePage"));
 const WordToPdfPage       = lazy(() => import("./pages/WordToPdfPage"));
 const WatermarkPDFPage    = lazy(() => import("./pages/WatermarkPDFPage"));
