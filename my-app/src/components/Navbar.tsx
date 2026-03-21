@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, FileStack, Sparkles, ArrowRight } from "lucide-react";
+import { Menu, X, FileStack, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -70,7 +70,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className={`relative text-[14px] font-bold rounded-xl transition-all duration-300 hover:text-violet-700 ${
+                className={`relative text-[16px] font-bold rounded-xl transition-all duration-300 hover:text-violet-700 ${
                   scrolled 
                     ? "px-5 py-2.5 text-gray-600 hover:bg-white hover:shadow-sm" 
                     : "px-2 py-2 text-gray-500 hover:text-gray-900"

@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Globe, Users, ShieldCheck, Heart } from "lucide-react";
+import { ArrowRight, Globe, Users, ShieldCheck, Heart, Beaker, ExternalLink, Rocket, Code2, Cpu } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -145,6 +145,111 @@ function CoreValues() {
   );
 }
 
+// ─── Bluelabtech Section ────────────────────────────────────────────────────────────────────────────────
+const blueLabtechHighlights = [
+  {
+    icon: <Rocket size={22} />,
+    title: "Innovation Driven",
+    desc: "Bluelabtech pushes the boundaries of what technology can do, building next-generation digital solutions for modern businesses.",
+  },
+  {
+    icon: <Code2 size={22} />,
+    title: "Software Excellence",
+    desc: "With a passionate team of engineers and designers, Bluelabtech delivers high-quality, scalable software products and services.",
+  },
+  {
+    icon: <Cpu size={22} />,
+    title: "Cutting-Edge Tech",
+    desc: "From AI-powered tools to cloud-native infrastructure, Bluelabtech leverages the latest technology stack to solve real-world problems.",
+  },
+];
+
+function BlueLabtechSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section className="py-24 bg-white border-t border-gray-100" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6">
+            <Beaker size={16} className="text-blue-600" />
+            <span className="text-[12px] font-bold text-blue-600 tracking-widest uppercase">Powered by</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+            Built with{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              Bluelabtech
+            </span>
+          </h2>
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            SheetHub is proudly developed and maintained by <strong className="text-gray-700">Bluelabtech</strong> — a technology company dedicated to crafting elegant, fast, and user-first software experiences that make a real difference.
+          </p>
+        </motion.div>
+
+        {/* Main Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#0a0f1e] via-[#0f1b3d] to-[#0a0f1e] p-10 sm:p-14 mb-12 shadow-2xl"
+        >
+          {/* Glow blobs */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8">
+            {/* Logo Badge */}
+            <div className="shrink-0 w-20 h-20 bg-blue-600/20 border border-blue-500/30 rounded-3xl flex items-center justify-center shadow-inner">
+              <Beaker size={36} className="text-blue-400" />
+            </div>
+
+            <div className="flex-1">
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-3 tracking-tight">Bluelabtech</h3>
+              <p className="text-blue-100/80 text-[16px] leading-relaxed max-w-2xl">
+                Bluelabtech is a forward-thinking software studio that believes technology should be accessible, beautiful, and empowering. Their team brings together expertise in product design, web engineering, and cloud architecture — creating tools like SheetHub that are used and trusted by millions worldwide.
+              </p>
+              <a
+                href="https://www.bluelabtech.space/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full text-[14px] transition-all duration-200 shadow-lg shadow-blue-900/40 hover:-translate-y-0.5 hover:shadow-xl"
+              >
+                Visit Bluelabtech <ExternalLink size={14} />
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Highlights Grid */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {blueLabtechHighlights.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+              className="bg-gray-50 border border-gray-100 rounded-[1.5rem] p-7 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-5 shadow-inner">
+                {item.icon}
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h4>
+              <p className="text-gray-500 text-[14px] leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── CTA Banner ───────────────────────────────────────────────────────────────
 function AboutCTA() {
   const ref = useRef(null);
@@ -192,6 +297,7 @@ export default function AboutPage() {
         <AboutHero />
         <OurStory />
         <CoreValues />
+        <BlueLabtechSection />
         <AboutCTA />
       </main>
       <Footer />
