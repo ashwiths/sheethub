@@ -6,9 +6,20 @@ const fs = require('fs');
  * Merge multiple PDF files into one
  */
 const mergePDFs = async (req, res) => {
+  // 6. Console logs are added for debugging (req.files)
+  console.log("FILES:", req.files);
+
   try {
+    // Ensure at least 2 files and max 10 files
     if (!req.files || req.files.length < 2) {
-      return res.status(400).json({ error: 'At least 2 PDF files are required.' });
+      if (req.files && req.files.length > 0) {
+        req.files.forEach(file => fs.unlink(file.path, () => {}));
+      }
+      return res.status(400).json({ error: 'Upload at least 2 PDF files' });
+    }
+    if (req.files.length > 10) {
+      req.files.forEach(file => fs.unlink(file.path, () => {}));
+      return res.status(400).json({ error: 'Maximum 10 files allowed' });
     }
 
     const filePaths = req.files.map((file) => file.path);

@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
+    cb(null, `${uniqueSuffix}-${file.originalname.replace(/\s+/g, '-')}`);
   },
 });
 
@@ -17,7 +17,7 @@ const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'application/pdf') {
     cb(null, true);
   } else {
-    cb(new Error('Only PDF files are allowed.'), false);
+    cb(new multer.MulterError('LIMIT_UNEXPECTED_FILE', file.fieldname), false);
   }
 };
 

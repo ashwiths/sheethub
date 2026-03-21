@@ -84,6 +84,7 @@ export default function ToolLayout({
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const revokeUrl = useCallback((url: string | null) => {
     if (url) URL.revokeObjectURL(url);
@@ -91,6 +92,7 @@ export default function ToolLayout({
 
   const handleFilesAdded = useCallback((newFiles: FileList | null) => {
     if (!newFiles) return;
+    setError(null);
     const entries: UploadedFile[] = Array.from(newFiles).map((f) => ({
       id: `${f.name}-${Date.now()}-${Math.random()}`,
       file: f,
@@ -99,6 +101,7 @@ export default function ToolLayout({
   }, []);
 
   const handleRemoveFile = (id: string) => {
+    setError(null);
     setFiles((prev) => prev.filter((f) => f.id !== id));
   };
 
@@ -106,11 +109,13 @@ export default function ToolLayout({
     revokeUrl(downloadUrl);
     setDownloadUrl(null);
     setFiles([]);
+    setError(null);
   };
 
   const processFiles = async () => {
     if (!files.length) return;
     setIsProcessing(true);
+    setError(null);
 
     try {
       let fileBlob: Blob;
@@ -123,8 +128,9 @@ export default function ToolLayout({
         });
       }
       setDownloadUrl(URL.createObjectURL(fileBlob));
-    } catch (e) {
+    } catch (e: any) {
       console.error("Processing failed", e);
+      setError(e.message || "An unexpected error occurred during processing.");
     } finally {
       setIsProcessing(false);
     }
@@ -241,13 +247,21 @@ export default function ToolLayout({
                     </h3>
                     
                     {/* Tool specific options */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                       {renderConfiguration ? (
                         renderConfiguration(files, setFiles)
                       ) : (
                         <p className="text-sm text-gray-500 italic">This tool requires no further configuration.</p>
                       )}
                     </div>
+
+                    {/* Inline UI Error Message */}
+                    {error && (
+                      <div className="mb-6 p-3 bg-red-50 border border-red-100 rounded-xl text-sm font-semibold text-red-600 flex items-start gap-2 animate-in fade-in slide-in-from-top-2">
+                        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>{error}</span>
+                      </div>
+                    )}
 
                     {/* Process Button */}
                     <button

@@ -1,19 +1,25 @@
 import ToolLayout from "../components/ToolLayout";
-import { PDFDocument } from "pdf-lib";
+import { mergePDFs } from "../api/pdfApi";
 
 export default function MergePDFPage() {
   const handleMerge = async (files: File[]): Promise<Blob> => {
-    const mergedPdf = await PDFDocument.create();
-    
-    for (const file of files) {
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(arrayBuffer);
-      const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-      copiedPages.forEach((page) => mergedPdf.addPage(page));
+    // 1. Validate at least 2 files
+    if (files.length < 2) {
+      throw new Error("Upload at least 2 PDF files");
     }
-    
-    const pdfBytes = await mergedPdf.save();
-    return new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
+    // 2. Validate max 10 files
+    if (files.length > 10) {
+      throw new Error("Maximum 10 files allowed");
+    }
+
+    try {
+      console.log(`Sending ${files.length} files to backend for merging...`);
+      const mergedBlob = await mergePDFs(files);
+      console.log("Successfully received merged blob from backend!");
+      return mergedBlob; 
+    } catch (error: any) {
+      throw new Error(error.message || "Failed to merge PDFs via backend API.");
+    }
   };
 
   return (
@@ -28,7 +34,7 @@ export default function MergePDFPage() {
       ]}
       features={[
         "Preserves formatting & fonts",
-        "No size limit (up to 100MB each)",
+        "Handled securely by backend API",
         "Unlimited merges, always free",
       ]}
       isSortable={true}
