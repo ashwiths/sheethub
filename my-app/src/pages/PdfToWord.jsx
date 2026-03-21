@@ -28,20 +28,8 @@ export default function PdfToWord() {
         throw new Error(errorMsg);
       }
 
-      // Handle response as blob
-      const blob = await response.blob();
-      
-      // Auto Download execution mapped against ToolLayout hooks
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "converted.docx";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-      
-      return blob; // Triggers ToolLayout Success UI
+      // Return blob — SuccessCard handles download with user-typed filename
+      return blob;
     } catch (err) {
       console.error(err);
       throw new Error(err.message || "Failed to convert PDF"); 

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import { Check, RotateCcw, ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -13,15 +13,29 @@ export default function SuccessCard({
   fileName,
   onReset,
 }: SuccessCardProps) {
-  const linkRef = useRef<HTMLAnchorElement>(null);
+  // Extract extension from the default fileName (e.g. "converted.xlsx" → ".xlsx")
+  const defaultExt = fileName.includes(".")
+    ? "." + fileName.split(".").pop()
+    : ".pdf";
 
-  // Auto-trigger download once the card mounts
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      linkRef.current?.click();
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
+  const [customName, setCustomName] = useState("");
+
+  const handleDownload = () => {
+    // Use user input if provided, else fall back to default (without extension)
+    const baseName = customName.trim() !== ""
+      ? customName.trim()
+      : fileName.includes(".")
+        ? fileName.substring(0, fileName.lastIndexOf("."))
+        : fileName;
+
+    const finalName = `${baseName}${defaultExt}`;
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = finalName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
 
   return (
     <motion.div
@@ -59,21 +73,32 @@ export default function SuccessCard({
 
       {/* Text block */}
       <h3 className="text-3xl font-black text-gray-900 tracking-tight mb-3">Task Completed!</h3>
-      <p className="text-lg text-gray-500 max-w-sm mb-1">
+      <p className="text-lg text-gray-500 max-w-sm mb-6">
         Your file has been processed successfully.
       </p>
-      <div className="px-4 py-2 bg-gray-50 rounded-xl border border-gray-100 flex items-center gap-2 mb-10 shadow-inner">
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">FILE</span>
-        <span className="text-sm font-semibold text-gray-800 truncate max-w-[200px]">{fileName}</span>
+
+      {/* Custom file name input */}
+      <div className="w-full max-w-sm mb-2">
+        <div className="flex items-center gap-2 px-4 py-3 rounded-2xl border-2 bg-gray-50 transition-all border-gray-200 focus-within:border-violet-400 focus-within:bg-white">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest shrink-0">NAME</span>
+          <input
+            type="text"
+            value={customName}
+            onChange={(e) => setCustomName(e.target.value)}
+            placeholder="Enter file name (optional)"
+            className="flex-1 bg-transparent text-sm font-semibold text-gray-800 outline-none placeholder-gray-400"
+          />
+          <span className="text-xs font-bold text-gray-400 shrink-0">{defaultExt}</span>
+        </div>
       </div>
 
-      {/* Hidden auto-download anchor */}
-      <a ref={linkRef} href={downloadUrl} download={fileName} className="hidden" aria-hidden />
+      <p className="text-xs text-gray-400 mb-8">
+        Only the extension <strong>{defaultExt}</strong> will be appended automatically.
+      </p>
 
       {/* Primary Download button */}
-      <a
-        href={downloadUrl}
-        download={fileName}
+      <button
+        onClick={handleDownload}
         className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 bg-gray-900 text-white text-[17px] font-bold rounded-2xl
           hover:bg-gray-800 hover:shadow-2xl hover:shadow-gray-900/30 hover:-translate-y-1 active:translate-y-0
           transition-all duration-300 overflow-hidden"
@@ -81,7 +106,7 @@ export default function SuccessCard({
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
         Download File
         <ArrowDown size={20} className="group-hover:translate-y-1 transition-transform" />
-      </a>
+      </button>
 
       {/* Start over */}
       <button

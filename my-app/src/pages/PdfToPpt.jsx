@@ -30,15 +30,7 @@ export default function PdfToPpt() {
 
       const blob = await response.blob();
       
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "converted.pptx";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-      
+      // Return blob — SuccessCard handles download with user-typed filename
       return blob;
     } catch (err) {
       console.error(err);
