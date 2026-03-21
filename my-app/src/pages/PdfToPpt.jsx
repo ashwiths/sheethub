@@ -1,20 +1,20 @@
 import React from 'react';
 import ToolLayout from '../components/ToolLayout';
 
-export default function PdfToWord() {
+export default function PdfToPpt() {
   const handleConvert = async (files) => {
     if (!files || files.length === 0) {
       throw new Error("Please upload a PDF file first.");
     }
     
-    // ToolLayout wraps files natively, we extract the File object properly
+    // ToolLayout wrapping extraction
     const file = files[0].file || files[0];
 
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:5000/api/pdf/pdf-to-word", {
+      const response = await fetch("http://localhost:5000/api/pdf/pdf-to-ppt", {
         method: "POST",
         body: formData,
       });
@@ -28,40 +28,38 @@ export default function PdfToWord() {
         throw new Error(errorMsg);
       }
 
-      // Handle response as blob
       const blob = await response.blob();
       
-      // Auto Download execution mapped against ToolLayout hooks
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "converted.docx";
+      a.download = "converted.pptx";
       document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
       
-      return blob; // Triggers ToolLayout Success UI
+      return blob;
     } catch (err) {
       console.error(err);
-      throw new Error(err.message || "Failed to convert PDF"); 
+      throw new Error(err.message || "Failed to convert PDF to PPT");
     }
   };
 
   return (
     <ToolLayout
-      toolId="pdf-to-word"
-      actionLabel="Convert to Word"
-      outputFileName="converted.docx"
+      toolId="pdf-to-powerpoint"
+      actionLabel="Convert to PowerPoint"
+      outputFileName="converted.pptx"
       steps={[
         { num: "1", title: "Upload", desc: "Select or drag & drop your PDF file." },
-        { num: "2", title: "Convert", desc: "Our system accurately extracts text and formatting." },
-        { num: "3", title: "Download", desc: "Get your fully editable Word document instantly." },
+        { num: "2", title: "Convert", desc: "Each PDF page becomes a distinct layout slide." },
+        { num: "3", title: "Download", desc: "Get your beautiful presenter document instantly." },
       ]}
       features={[
-        "Preserves exact document layer structure",
-        "Retains font tracking organically",
-        "Securely deletes file post-processing",
+        "Perfect 16:9 widescreen layout edge scaling",
+        "Zero visual element distortion natively mapped",
+        "Instant native slide integration directly on device",
       ]}
       allowMultiple={false}
       onProcess={handleConvert}

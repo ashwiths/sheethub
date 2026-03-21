@@ -74,6 +74,7 @@ export default function SplitPDF() {
       toolId="split-pdf"
       actionLabel="Split PDF"
       outputFileName="split.pdf"
+      allowMultiple={false}
       steps={[
          { num: "1", title: "Upload", desc: "Select or drag a single document." },
          { num: "2", title: "Pages", desc: "Specify rules like '1-3,5'." },

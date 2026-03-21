@@ -16,6 +16,7 @@ interface Step {
 interface ToolLayoutProps {
   toolId: string;
   accept?: string;
+  allowMultiple?: boolean;
   actionLabel?: string;
   outputFileName?: string;
   steps?: Step[];
@@ -64,6 +65,7 @@ function PremiumSteps({ steps }: { steps: Step[] }) {
 export default function ToolLayout({
   toolId,
   accept = ".pdf,application/pdf",
+  allowMultiple = true,
   actionLabel,
   outputFileName,
   steps,
@@ -97,8 +99,8 @@ export default function ToolLayout({
       id: `${f.name}-${Date.now()}-${Math.random()}`,
       file: f,
     }));
-    setFiles((prev) => [...prev, ...entries]);
-  }, []);
+    setFiles((prev) => allowMultiple ? [...prev, ...entries] : [entries[0]]);
+  }, [allowMultiple]);
 
   const handleRemoveFile = (id: string) => {
     setError(null);
@@ -231,11 +233,13 @@ export default function ToolLayout({
                       <FileList files={files} onRemove={handleRemoveFile} isSortable={isSortable} onReorder={setFiles} />
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="h-24">
-                        <UploadArea accept={accept} onFilesAdded={handleFilesAdded} compact />
+                    {allowMultiple && (
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <div className="h-24">
+                          <UploadArea accept={accept} onFilesAdded={handleFilesAdded} compact />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 

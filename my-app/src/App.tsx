@@ -26,7 +26,8 @@ const ProtectPDFPage      = lazy(() => import("./pages/ProtectPDFPage"));
 const UnlockPDFPage       = lazy(() => import("./pages/UnlockPDFPage"));
 const SignPDFPage         = lazy(() => import("./pages/SignPDFPage"));
 // New 17 tools
-const PdfToPowerpointPage = lazy(() => import("./pages/PdfToPowerpointPage"));
+// @ts-ignore - Created as .jsx per requirements
+const PdfToPpt = lazy(() => import("./pages/PdfToPpt"));
 const PdfToExcelPage      = lazy(() => import("./pages/PdfToExcelPage"));
 const PowerpointToPdfPage = lazy(() => import("./pages/PowerpointToPdfPage"));
 const ExcelToPdfPage      = lazy(() => import("./pages/ExcelToPdfPage"));
@@ -100,7 +101,8 @@ function App() {
               <Route path="/unlock-pdf"         element={<UnlockPDFPage />} />
               <Route path="/sign-pdf"           element={<SignPDFPage />} />
               {/* New 17 routes */}
-              <Route path="/pdf-to-powerpoint"  element={<PdfToPowerpointPage />} />
+              <Route path="/pdf-to-powerpoint"  element={<PdfToPpt />} />
+              <Route path="/pdf-to-ppt"         element={<PdfToPpt />} />
               <Route path="/pdf-to-excel"       element={<PdfToExcelPage />} />
               <Route path="/powerpoint-to-pdf"  element={<PowerpointToPdfPage />} />
               <Route path="/excel-to-pdf"       element={<ExcelToPdfPage />} />
