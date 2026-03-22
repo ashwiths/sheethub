@@ -31,7 +31,12 @@ const SignPDFPage         = lazy(() => import("./pages/SignPDFPage"));
 const PdfToPpt = lazy(() => import("./pages/PdfToPpt"));
 const PdfToExcelPage      = lazy(() => import("./pages/PdfToExcelPage"));
 const PowerpointToPdfPage = lazy(() => import("./pages/PowerpointToPdfPage"));
-const ExcelToPdfPage      = lazy(() => import("./pages/ExcelToPdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const PptToPdf            = lazy(() => import("./pages/PptToPdf"));
+// @ts-ignore - Created as .jsx per requirements
+const ExcelToPdf          = lazy(() => import("./pages/ExcelToPdf"));
+// @ts-ignore - Created as .jsx per requirements
+const PdfToJpg            = lazy(() => import("./pages/PdfToJpg"));
 const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
 const JpgToPdfPage        = lazy(() => import("./pages/JpgToPdfPage"));
 const HtmlToPdfPage       = lazy(() => import("./pages/HtmlToPdfPage"));
@@ -106,7 +111,9 @@ function App() {
               <Route path="/pdf-to-ppt"         element={<PdfToPpt />} />
               <Route path="/pdf-to-excel"       element={<PdfToExcelPage />} />
               <Route path="/powerpoint-to-pdf"  element={<PowerpointToPdfPage />} />
-              <Route path="/excel-to-pdf"       element={<ExcelToPdfPage />} />
+              <Route path="/ppt-to-pdf"         element={<PptToPdf />} />
+              <Route path="/excel-to-pdf"       element={<ExcelToPdf />} />
+              <Route path="/pdf-to-jpg"         element={<PdfToJpg />} />
               <Route path="/edit-pdf"           element={<EditPdfPage />} />
               <Route path="/jpg-to-pdf"         element={<JpgToPdfPage />} />
               <Route path="/html-to-pdf"        element={<HtmlToPdfPage />} />
