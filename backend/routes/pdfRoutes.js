@@ -15,6 +15,8 @@ const { wordToPdf } = require("../controllers/wordToPdfController");
 const { pptToPdf } = require("../controllers/pptToPdfController");
 const { excelToPdf } = require("../controllers/excelToPdfController");
 const { pdfToJpg } = require("../controllers/pdfToJpgController");
+const { jpgToPdf } = require("../controllers/jpgToPdfController");
+const { rotatePdf } = require("../controllers/rotatePdfController");
 
 console.log("PDF routes loaded");
 
@@ -49,5 +51,11 @@ router.post("/excel-to-pdf", upload.single("file"), excelToPdf);
 
 // POST /api/pdf/pdf-to-jpg - Convert PDF to JPG
 router.post("/pdf-to-jpg", upload.single("file"), pdfToJpg);
+
+// POST /api/pdf/jpg-to-pdf - Convert JPG to PDF
+router.post("/jpg-to-pdf", upload.array("file"), jpgToPdf);
+
+// POST /api/pdf/rotate-pdf - Rotate PDF pages
+router.post("/rotate-pdf", upload.single("file"), rotatePdf);
 
 module.exports = router;

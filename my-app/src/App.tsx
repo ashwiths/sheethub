@@ -15,7 +15,8 @@ const MergePDFPage        = lazy(() => import("./pages/MergePDFPage"));
 const SplitPDFPage        = lazy(() => import("./pages/SplitPDF"));
 // @ts-ignore - Created as .jsx per requirements
 const CompressPDFPage     = lazy(() => import("./pages/CompressPDF"));
-const RotatePDFPage       = lazy(() => import("./pages/RotatePDFPage"));
+// @ts-ignore - Created as .jsx per requirements
+const RotatePDF           = lazy(() => import("./pages/RotatePDF"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToWordPage       = lazy(() => import("./pages/PdfToWord"));
 const PdfToImagePage      = lazy(() => import("./pages/PdfToImagePage"));
@@ -38,7 +39,8 @@ const ExcelToPdf          = lazy(() => import("./pages/ExcelToPdf"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToJpg            = lazy(() => import("./pages/PdfToJpg"));
 const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
-const JpgToPdfPage        = lazy(() => import("./pages/JpgToPdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const JpgToPdf            = lazy(() => import("./pages/JpgToPdf"));
 const HtmlToPdfPage       = lazy(() => import("./pages/HtmlToPdfPage"));
 const OrganizePdfPage     = lazy(() => import("./pages/OrganizePdfPage"));
 const PdfToPdfaPage       = lazy(() => import("./pages/PdfToPdfaPage"));
@@ -97,7 +99,7 @@ function App() {
               <Route path="/merge-pdf"          element={<MergePDFPage />} />
               <Route path="/split-pdf"          element={<SplitPDFPage />} />
               <Route path="/compress-pdf"       element={<CompressPDFPage />} />
-              <Route path="/rotate-pdf"         element={<RotatePDFPage />} />
+              <Route path="/rotate-pdf"         element={<RotatePDF />} />
               <Route path="/pdf-to-word"        element={<PdfToWordPage />} />
               <Route path="/pdf-to-image"       element={<PdfToImagePage />} />
               <Route path="/word-to-pdf"        element={<WordToPDF />} />
@@ -115,7 +117,7 @@ function App() {
               <Route path="/excel-to-pdf"       element={<ExcelToPdf />} />
               <Route path="/pdf-to-jpg"         element={<PdfToJpg />} />
               <Route path="/edit-pdf"           element={<EditPdfPage />} />
-              <Route path="/jpg-to-pdf"         element={<JpgToPdfPage />} />
+              <Route path="/jpg-to-pdf"         element={<JpgToPdf />} />
               <Route path="/html-to-pdf"        element={<HtmlToPdfPage />} />
               <Route path="/organize-pdf"       element={<OrganizePdfPage />} />
               <Route path="/pdf-to-pdfa"        element={<PdfToPdfaPage />} />
