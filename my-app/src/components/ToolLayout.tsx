@@ -85,12 +85,11 @@ export default function ToolLayout({
   // ─── Upload Orchestration Logic ───
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [isDone, setIsDone] = useState(false);
+  const [finalFileName, setFinalFileName] = useState<string | null>(null);
+  const [fileBlob, setFileBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  const revokeUrl = useCallback((url: string | null) => {
-    if (url) URL.revokeObjectURL(url);
-  }, []);
+  const [customFileName, setCustomFileName] = useState("");
 
   const handleFilesAdded = useCallback((newFiles: FileList | null) => {
     if (!newFiles) return;
@@ -108,10 +107,12 @@ export default function ToolLayout({
   };
 
   const handleReset = () => {
-    revokeUrl(downloadUrl);
-    setDownloadUrl(null);
+    setIsDone(false);
+    setFinalFileName(null);
+    setFileBlob(null);
     setFiles([]);
     setError(null);
+    setCustomFileName("");
   };
 
   const processFiles = async () => {
@@ -129,7 +130,32 @@ export default function ToolLayout({
           type: "application/pdf",
         });
       }
-      setDownloadUrl(URL.createObjectURL(fileBlob));
+
+      // Determine final filename
+      const ext = resolvedOutput.includes(".")
+        ? "." + resolvedOutput.split(".").pop()
+        : ".pdf";
+      const baseName = customFileName.trim() !== ""
+        ? customFileName.trim()
+        : resolvedOutput.includes(".")
+          ? resolvedOutput.substring(0, resolvedOutput.lastIndexOf("."))
+          : resolvedOutput;
+      const downloadName = `${baseName}${ext}`;
+
+      // Auto-download
+      const url = URL.createObjectURL(fileBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = downloadName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      // Keep blob in state for fallback manual download
+      setFileBlob(fileBlob);
+      setFinalFileName(downloadName);
+      setIsDone(true);
     } catch (e: any) {
       console.error("Processing failed", e);
       setError(e.message || "An unexpected error occurred during processing.");
@@ -193,13 +219,22 @@ export default function ToolLayout({
           className="w-full mt-12"
         >
           <AnimatePresence mode="wait">
-            {downloadUrl ? (
+            {isDone ? (
               <div className="max-w-2xl mx-auto">
                 <SuccessCard
                   key="success"
-                  downloadUrl={downloadUrl}
-                  fileName={resolvedOutput}
+                  fileName={finalFileName ?? resolvedOutput}
                   onReset={handleReset}
+                  onDownload={fileBlob ? () => {
+                    const url = URL.createObjectURL(fileBlob!);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = finalFileName ?? resolvedOutput;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                  } : undefined}
                 />
               </div>
             ) : files.length === 0 ? (
@@ -221,7 +256,7 @@ export default function ToolLayout({
               >
                 {/* Left Column: Files */}
                 <div className="lg:col-span-7 xl:col-span-8 space-y-4">
-                  <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 border border-gray-100 shadow-xl shadow-gray-200/40 min-h-[400px] flex flex-col">
+                  <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 border border-gray-100 shadow-xl shadow-gray-200/40 min-h-[200px] flex flex-col">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-bold text-gray-900">Your Files</h3>
                       <span className="bg-violet-100 text-violet-700 px-3 py-1 text-xs font-bold rounded-full">
@@ -257,6 +292,26 @@ export default function ToolLayout({
                       ) : (
                         <p className="text-sm text-gray-500 italic">This tool requires no further configuration.</p>
                       )}
+                    </div>
+
+                    {/* Custom filename input */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Custom Filename <span className="font-normal text-gray-400">(Optional)</span>
+                      </label>
+                      <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-gray-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:border-violet-500 bg-white transition-all">
+                        <input
+                          type="text"
+                          value={customFileName}
+                          onChange={(e) => setCustomFileName(e.target.value)}
+                          placeholder="e.g. my-document"
+                          className="flex-1 bg-transparent text-sm font-medium text-gray-800 outline-none placeholder-gray-400"
+                        />
+                        <span className="text-xs font-bold text-gray-400 shrink-0">
+                          {resolvedOutput.includes(".") ? "." + resolvedOutput.split(".").pop() : ".pdf"}
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs text-gray-400">Leave blank to use the default filename.</p>
                     </div>
 
                     {/* Inline UI Error Message */}

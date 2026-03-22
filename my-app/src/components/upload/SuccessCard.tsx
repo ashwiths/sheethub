@@ -1,42 +1,13 @@
-import { useState } from "react";
-import { Check, RotateCcw, ArrowDown } from "lucide-react";
+import { Check, RotateCcw, Download } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SuccessCardProps {
-  downloadUrl: string;
   fileName: string;
   onReset: () => void;
+  onDownload?: () => void;
 }
 
-export default function SuccessCard({
-  downloadUrl,
-  fileName,
-  onReset,
-}: SuccessCardProps) {
-  // Extract extension from the default fileName (e.g. "converted.xlsx" → ".xlsx")
-  const defaultExt = fileName.includes(".")
-    ? "." + fileName.split(".").pop()
-    : ".pdf";
-
-  const [customName, setCustomName] = useState("");
-
-  const handleDownload = () => {
-    // Use user input if provided, else fall back to default (without extension)
-    const baseName = customName.trim() !== ""
-      ? customName.trim()
-      : fileName.includes(".")
-        ? fileName.substring(0, fileName.lastIndexOf("."))
-        : fileName;
-
-    const finalName = `${baseName}${defaultExt}`;
-    const a = document.createElement("a");
-    a.href = downloadUrl;
-    a.download = finalName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  };
-
+export default function SuccessCard({ fileName, onReset, onDownload }: SuccessCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -48,7 +19,7 @@ export default function SuccessCard({
       <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] bg-emerald-400/20 blur-[80px] rounded-full -z-10 mix-blend-multiply" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[300px] h-[300px] bg-teal-400/20 blur-[80px] rounded-full -z-10 mix-blend-multiply" />
 
-      {/* Confetti/Stars (Simulated via SVG) */}
+      {/* Confetti/Stars */}
       <svg className="absolute inset-0 w-full h-full -z-10 opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="20%" cy="30%" r="4" fill="#10B981" />
         <circle cx="80%" cy="40%" r="6" fill="#34D399" />
@@ -73,45 +44,31 @@ export default function SuccessCard({
 
       {/* Text block */}
       <h3 className="text-3xl font-black text-gray-900 tracking-tight mb-3">Task Completed!</h3>
-      <p className="text-lg text-gray-500 max-w-sm mb-6">
+      <p className="text-lg text-gray-500 max-w-sm mb-2">
         Your file has been processed successfully.
       </p>
 
-      {/* Custom file name input */}
-      <div className="w-full max-w-sm mb-2">
-        <div className="flex items-center gap-2 px-4 py-3 rounded-2xl border-2 bg-gray-50 transition-all border-gray-200 focus-within:border-violet-400 focus-within:bg-white">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest shrink-0">NAME</span>
-          <input
-            type="text"
-            value={customName}
-            onChange={(e) => setCustomName(e.target.value)}
-            placeholder="Enter file name (optional)"
-            className="flex-1 bg-transparent text-sm font-semibold text-gray-800 outline-none placeholder-gray-400"
-          />
-          <span className="text-xs font-bold text-gray-400 shrink-0">{defaultExt}</span>
-        </div>
+      {/* Filename badge */}
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-200 rounded-full mb-4">
+        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">FILE</span>
+        <span className="text-sm font-semibold text-gray-700 truncate max-w-[200px]">{fileName}</span>
       </div>
 
-      <p className="text-xs text-gray-400 mb-8">
-        Only the extension <strong>{defaultExt}</strong> will be appended automatically.
-      </p>
-
-      {/* Primary Download button */}
-      <button
-        onClick={handleDownload}
-        className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 bg-gray-900 text-white text-[17px] font-bold rounded-2xl
-          hover:bg-gray-800 hover:shadow-2xl hover:shadow-gray-900/30 hover:-translate-y-1 active:translate-y-0
-          transition-all duration-300 overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-        Download File
-        <ArrowDown size={20} className="group-hover:translate-y-1 transition-transform" />
-      </button>
+      {/* Fallback download link */}
+      {onDownload && (
+        <button
+          onClick={onDownload}
+          className="flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-800 hover:bg-violet-50 px-4 py-2 rounded-xl transition-all mb-4"
+        >
+          <Download size={15} />
+          If not downloaded, click here
+        </button>
+      )}
 
       {/* Start over */}
       <button
         onClick={onReset}
-        className="mt-8 flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-gray-800 hover:bg-gray-100 px-5 py-2.5 rounded-xl transition-all"
+        className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-gray-800 hover:bg-gray-100 px-5 py-2.5 rounded-xl transition-all"
       >
         <RotateCcw size={16} />
         Process another file

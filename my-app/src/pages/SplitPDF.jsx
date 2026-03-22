@@ -47,19 +47,7 @@ export default function SplitPDF() {
       // 5. Handle response: Receive blob (PDF)
       const blob = await response.blob();
       
-      // Auto download file as "split.pdf"
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "split.pdf";
-      document.body.appendChild(link);
-      link.click();
-      
-      // Cleanup DOM
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      
-      // Return blob for ToolLayout success state handling
+      // Return blob — ToolLayout handles auto-download
       return blob;
       
     } catch (error) {
