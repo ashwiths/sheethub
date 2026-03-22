@@ -28,6 +28,9 @@ export default function PdfToWord() {
         throw new Error(errorMsg);
       }
 
+      // Define blob properly
+      const blob = await response.blob();
+      
       // Return blob — SuccessCard handles download with user-typed filename
       return blob;
     } catch (err) {

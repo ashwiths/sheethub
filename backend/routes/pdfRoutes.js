@@ -11,6 +11,7 @@ const compressController = require('../controllers/compressController');
 const { pdfToWord } = require("../controllers/pdfToWordController");
 const { pdfToPpt } = require("../controllers/pdfToPptController");
 const { pdfToExcel } = require("../controllers/pdfToExcelController");
+const { wordToPdf } = require("../controllers/wordToPdfController");
 
 console.log("PDF routes loaded");
 
@@ -33,5 +34,8 @@ router.post("/pdf-to-ppt", upload.single("file"), pdfToPpt);
 
 // POST /api/pdf/pdf-to-excel - Convert PDF to Excel
 router.post("/pdf-to-excel", upload.single("file"), pdfToExcel);
+
+// POST /api/pdf/word-to-pdf - Convert Word to PDF
+router.post("/word-to-pdf", upload.single("file"), wordToPdf);
 
 module.exports = router;

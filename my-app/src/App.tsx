@@ -19,7 +19,8 @@ const RotatePDFPage       = lazy(() => import("./pages/RotatePDFPage"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToWordPage       = lazy(() => import("./pages/PdfToWord"));
 const PdfToImagePage      = lazy(() => import("./pages/PdfToImagePage"));
-const WordToPdfPage       = lazy(() => import("./pages/WordToPdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const WordToPDF           = lazy(() => import("./pages/WordToPDF"));
 const WatermarkPDFPage    = lazy(() => import("./pages/WatermarkPDFPage"));
 const OcrPDFPage          = lazy(() => import("./pages/OcrPDFPage"));
 const ProtectPDFPage      = lazy(() => import("./pages/ProtectPDFPage"));
@@ -94,7 +95,7 @@ function App() {
               <Route path="/rotate-pdf"         element={<RotatePDFPage />} />
               <Route path="/pdf-to-word"        element={<PdfToWordPage />} />
               <Route path="/pdf-to-image"       element={<PdfToImagePage />} />
-              <Route path="/word-to-pdf"        element={<WordToPdfPage />} />
+              <Route path="/word-to-pdf"        element={<WordToPDF />} />
               <Route path="/watermark-pdf"      element={<WatermarkPDFPage />} />
               <Route path="/ocr-pdf"            element={<OcrPDFPage />} />
               <Route path="/protect-pdf"        element={<ProtectPDFPage />} />
