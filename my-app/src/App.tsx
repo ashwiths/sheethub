@@ -41,7 +41,8 @@ const PdfToJpg            = lazy(() => import("./pages/PdfToJpg"));
 const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const JpgToPdf            = lazy(() => import("./pages/JpgToPdf"));
-const HtmlToPdfPage       = lazy(() => import("./pages/HtmlToPdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const HtmlToPdf           = lazy(() => import("./pages/HtmlToPdf"));
 const OrganizePdfPage     = lazy(() => import("./pages/OrganizePdfPage"));
 const PdfToPdfaPage       = lazy(() => import("./pages/PdfToPdfaPage"));
 const RepairPdfPage       = lazy(() => import("./pages/RepairPdfPage"));
@@ -118,7 +119,7 @@ function App() {
               <Route path="/pdf-to-jpg"         element={<PdfToJpg />} />
               <Route path="/edit-pdf"           element={<EditPdfPage />} />
               <Route path="/jpg-to-pdf"         element={<JpgToPdf />} />
-              <Route path="/html-to-pdf"        element={<HtmlToPdfPage />} />
+              <Route path="/html-to-pdf"        element={<HtmlToPdf />} />
               <Route path="/organize-pdf"       element={<OrganizePdfPage />} />
               <Route path="/pdf-to-pdfa"        element={<PdfToPdfaPage />} />
               <Route path="/repair-pdf"         element={<RepairPdfPage />} />
