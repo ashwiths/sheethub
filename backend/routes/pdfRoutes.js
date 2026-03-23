@@ -22,6 +22,7 @@ const { protectPdf } = require("../controllers/protectPdfController");
 const { unlockPdf } = require("../controllers/unlockPdfController");
 const { organizePdf } = require("../controllers/organizePdfController");
 const { pdfToPDFA } = require("../controllers/pdfToPDFAController");
+const { repairPdf } = require("../controllers/repairPdfController");
 
 console.log("PDF routes loaded");
 
@@ -77,5 +78,8 @@ router.post("/organize-pdf", upload.single("file"), organizePdf);
 
 // POST /api/pdf/pdf-to-pdfa - Convert PDF to PDF/A
 router.post("/pdf-to-pdfa", upload.single("file"), pdfToPDFA);
+
+// POST /api/pdf/repair-pdf - Repair PDF
+router.post("/repair-pdf", upload.single("file"), repairPdf);
 
 module.exports = router;
