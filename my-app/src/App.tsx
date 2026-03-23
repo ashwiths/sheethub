@@ -24,8 +24,10 @@ const PdfToImagePage      = lazy(() => import("./pages/PdfToImagePage"));
 const WordToPDF           = lazy(() => import("./pages/WordToPDF"));
 const WatermarkPDFPage    = lazy(() => import("./pages/WatermarkPDFPage"));
 const OcrPDFPage          = lazy(() => import("./pages/OcrPDFPage"));
-const ProtectPDFPage      = lazy(() => import("./pages/ProtectPDFPage"));
-const UnlockPDFPage       = lazy(() => import("./pages/UnlockPDFPage"));
+// @ts-ignore - Created as .jsx per requirements
+const ProtectPDF          = lazy(() => import("./pages/ProtectPDF"));
+// @ts-ignore - Created as .jsx per requirements
+const UnlockPDF       = lazy(() => import("./pages/UnlockPDF"));
 const SignPDFPage         = lazy(() => import("./pages/SignPDFPage"));
 // New 17 tools
 // @ts-ignore - Created as .jsx per requirements
@@ -43,7 +45,8 @@ const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
 const JpgToPdf            = lazy(() => import("./pages/JpgToPdf"));
 // @ts-ignore - Created as .jsx per requirements
 const HtmlToPdf           = lazy(() => import("./pages/HtmlToPdf"));
-const OrganizePdfPage     = lazy(() => import("./pages/OrganizePdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const OrganizePDF         = lazy(() => import("./pages/OrganizePDF"));
 const PdfToPdfaPage       = lazy(() => import("./pages/PdfToPdfaPage"));
 const RepairPdfPage       = lazy(() => import("./pages/RepairPdfPage"));
 const PageNumbersPage     = lazy(() => import("./pages/PageNumbersPage"));
@@ -106,8 +109,8 @@ function App() {
               <Route path="/word-to-pdf"        element={<WordToPDF />} />
               <Route path="/watermark-pdf"      element={<WatermarkPDFPage />} />
               <Route path="/ocr-pdf"            element={<OcrPDFPage />} />
-              <Route path="/protect-pdf"        element={<ProtectPDFPage />} />
-              <Route path="/unlock-pdf"         element={<UnlockPDFPage />} />
+              <Route path="/protect-pdf"        element={<ProtectPDF />} />
+              <Route path="/unlock-pdf"         element={<UnlockPDF />} />
               <Route path="/sign-pdf"           element={<SignPDFPage />} />
               {/* New 17 routes */}
               <Route path="/pdf-to-powerpoint"  element={<PdfToPpt />} />
@@ -120,7 +123,7 @@ function App() {
               <Route path="/edit-pdf"           element={<EditPdfPage />} />
               <Route path="/jpg-to-pdf"         element={<JpgToPdf />} />
               <Route path="/html-to-pdf"        element={<HtmlToPdf />} />
-              <Route path="/organize-pdf"       element={<OrganizePdfPage />} />
+              <Route path="/organize-pdf"       element={<OrganizePDF />} />
               <Route path="/pdf-to-pdfa"        element={<PdfToPdfaPage />} />
               <Route path="/repair-pdf"         element={<RepairPdfPage />} />
               <Route path="/page-numbers"       element={<PageNumbersPage />} />

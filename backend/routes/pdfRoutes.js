@@ -18,6 +18,10 @@ const { pdfToJpg } = require("../controllers/pdfToJpgController");
 const { jpgToPdf } = require("../controllers/jpgToPdfController");
 const { rotatePdf } = require("../controllers/rotatePdfController");
 const { htmlToPdf } = require("../controllers/htmlToPdfController");
+const { protectPdf } = require("../controllers/protectPdfController");
+const { unlockPdf } = require("../controllers/unlockPdfController");
+const { organizePdf } = require("../controllers/organizePdfController");
+const { pdfToPDFA } = require("../controllers/pdfToPDFAController");
 
 console.log("PDF routes loaded");
 
@@ -61,5 +65,17 @@ router.post("/rotate-pdf", upload.single("file"), rotatePdf);
 
 // POST /api/pdf/html-to-pdf - Convert HTML to PDF
 router.post("/html-to-pdf", express.json(), htmlToPdf);
+
+// POST /api/pdf/protect-pdf - Protect PDF
+router.post("/protect-pdf", upload.single("file"), protectPdf);
+
+// POST /api/pdf/unlock-pdf - Unlock PDF
+router.post("/unlock-pdf", upload.single("file"), unlockPdf);
+
+// POST /api/pdf/organize-pdf - Organize PDF
+router.post("/organize-pdf", upload.single("file"), organizePdf);
+
+// POST /api/pdf/pdf-to-pdfa - Convert PDF to PDF/A
+router.post("/pdf-to-pdfa", upload.single("file"), pdfToPDFA);
 
 module.exports = router;
