@@ -15,7 +15,7 @@ exports.pdfToJpg = async (req, res) => {
     console.log("File received:", inputPath);
 
     const timestamp = Date.now();
-    const outputDir = path.join(__dirname, `../output/images_${timestamp}`);
+    const outputDir = `/tmp/images_${timestamp}`;
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });

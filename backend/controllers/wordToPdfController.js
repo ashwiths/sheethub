@@ -12,7 +12,7 @@ exports.wordToPdf = (req, res) => {
     }
 
     const inputPath = req.file.path;
-    const outputDir = path.join(__dirname, "../output");
+    const outputDir = "/tmp";
 
     // Ensure output folder exists
     if (!fs.existsSync(outputDir)) {

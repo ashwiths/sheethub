@@ -48,7 +48,7 @@ exports.pdfToWord = async (req, res) => {
     const buffer = await Packer.toBuffer(doc);
 
     // Ensure output directory exists
-    const outputDir = path.join(__dirname, "../output");
+    const outputDir = "/tmp";
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }

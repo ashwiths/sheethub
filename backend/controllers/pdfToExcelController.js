@@ -34,7 +34,7 @@ exports.pdfToExcel = async (req, res) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     // Ensure output directory exists
-    const outputDir = path.join(__dirname, "../output");
+    const outputDir = "/tmp";
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }

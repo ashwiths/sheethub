@@ -19,7 +19,7 @@ exports.pdfToPpt = async (req, res) => {
     const baseOutputName = `slide_${Date.now()}`;
     
     // Ensure directories exist
-    const outputDir = path.join(__dirname, '../output');
+    const outputDir = '/tmp';
     outputImagesDir = path.join(outputDir, 'images', baseOutputName);
     
     if (!fs.existsSync(outputDir)) {

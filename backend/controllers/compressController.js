@@ -25,7 +25,7 @@ exports.compressPDF = async (req, res) => {
     const pdfSetting = levelMapping[level] || '/ebook';
 
     // Ensure backend/output/ directory exists
-    const outputDir = path.join(__dirname, '../output');
+    const outputDir = "/tmp";
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }

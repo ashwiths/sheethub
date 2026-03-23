@@ -13,7 +13,7 @@ exports.excelToPdf = async (req, res) => {
     const inputPath = req.file.path;
     console.log("File received:", inputPath);
 
-    const outputDir = path.join(__dirname, "../output");
+    const outputDir = "/tmp";
 
     // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {

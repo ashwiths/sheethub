@@ -4,7 +4,8 @@ const path = require('path');
 // Configure storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
+    // Uses cloud-safe tmp directory instead of local uploads
+    cb(null, '/tmp');
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;

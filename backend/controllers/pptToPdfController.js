@@ -13,7 +13,7 @@ exports.pptToPdf = async (req, res) => {
     console.log("File received:", req.file.path);
 
     const inputPath = req.file.path;
-    const outputDir = path.join(__dirname, "../output");
+    const outputDir = "/tmp";
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });

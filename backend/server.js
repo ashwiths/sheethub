@@ -1,5 +1,5 @@
 process.on('uncaughtException', (err, origin) => {
-  console.error(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+  console.error(`Caught exception: ${err}\nException origin: ${origin}`);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
@@ -12,19 +12,34 @@ const pdfRoutes = require("./routes/pdfRoutes");
 
 const app = express();
 
-app.use(cors());
+// CORS
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+// Body parser
 app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Routes
 app.use("/api/pdf", pdfRoutes);
 
+// Health check
 app.get("/", (req, res) => {
-  res.send("Backend running 🚀");
+  res.send("Backend is running 🚀");
 });
 
-const PORT = 5000;
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Server error" });
+});
+
+// PORT (IMPORTANT for Render)
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -24,7 +24,7 @@ const mergePDFs = async (req, res) => {
 
     const filePaths = req.files.map((file) => file.path);
     const outputFileName = `merged_${Date.now()}.pdf`;
-    const outputPath = path.join(__dirname, '../output', outputFileName);
+    const outputPath = path.join('/tmp', outputFileName);
 
     await mergePDFFiles(filePaths, outputPath);
 
