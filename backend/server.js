@@ -1,3 +1,11 @@
+process.on('uncaughtException', (err, origin) => {
+  console.error(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 const express = require("express");
 const cors = require("cors");
 const pdfRoutes = require("./routes/pdfRoutes");

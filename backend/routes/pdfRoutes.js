@@ -17,12 +17,13 @@ const { excelToPdf } = require("../controllers/excelToPdfController");
 const { pdfToJpg } = require("../controllers/pdfToJpgController");
 const { jpgToPdf } = require("../controllers/jpgToPdfController");
 const { rotatePdf } = require("../controllers/rotatePdfController");
-const { htmlToPdf } = require("../controllers/htmlToPdfController");
+// const { htmlToPdf } = require("../controllers/htmlToPdfController");
 const { protectPdf } = require("../controllers/protectPdfController");
 const { unlockPdf } = require("../controllers/unlockPdfController");
 const { organizePdf } = require("../controllers/organizePdfController");
 const { pdfToPDFA } = require("../controllers/pdfToPDFAController");
 const { repairPdf } = require("../controllers/repairPdfController");
+const { addPageNumbers } = require("../controllers/pageNumberController");
 
 console.log("PDF routes loaded");
 
@@ -65,7 +66,7 @@ router.post("/jpg-to-pdf", upload.array("file"), jpgToPdf);
 router.post("/rotate-pdf", upload.single("file"), rotatePdf);
 
 // POST /api/pdf/html-to-pdf - Convert HTML to PDF
-router.post("/html-to-pdf", express.json(), htmlToPdf);
+// router.post("/html-to-pdf", express.json(), htmlToPdf);
 
 // POST /api/pdf/protect-pdf - Protect PDF
 router.post("/protect-pdf", upload.single("file"), protectPdf);
@@ -81,5 +82,8 @@ router.post("/pdf-to-pdfa", upload.single("file"), pdfToPDFA);
 
 // POST /api/pdf/repair-pdf - Repair PDF
 router.post("/repair-pdf", upload.single("file"), repairPdf);
+
+// POST /api/pdf/page-numbers - Add Page Numbers
+router.post("/page-numbers", upload.single("file"), addPageNumbers);
 
 module.exports = router;

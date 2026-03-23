@@ -205,6 +205,16 @@ export const tools: Tool[] = [
     bgColor: "bg-blue-50",
   },
   {
+    id: "page-numbers",
+    name: "Add Page Numbers",
+    description: "Insert page numbers into your PDF for better readability.",
+    icon: ListOrdered,
+    category: "Edit",
+    path: "/page-numbers",
+    color: "text-blue-500",
+    bgColor: "bg-blue-50",
+  },
+  {
     id: "unlock-pdf",
     name: "Unlock PDF",
     description: "Remove passwords from PDF files instantly.",

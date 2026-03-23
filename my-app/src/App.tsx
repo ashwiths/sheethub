@@ -50,7 +50,8 @@ const OrganizePDF         = lazy(() => import("./pages/OrganizePDF"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToPDFA           = lazy(() => import("./pages/PdfToPDFA"));
 const RepairPdfPage       = lazy(() => import("./pages/RepairPdfPage"));
-const PageNumbersPage     = lazy(() => import("./pages/PageNumbersPage"));
+// @ts-ignore - Created as .jsx per requirements
+const PageNumbers         = lazy(() => import("./pages/PageNumbers"));
 const ScanToPdfPage       = lazy(() => import("./pages/ScanToPdfPage"));
 const ComparePdfPage      = lazy(() => import("./pages/ComparePdfPage"));
 const RedactPdfPage       = lazy(() => import("./pages/RedactPdfPage"));
@@ -127,7 +128,7 @@ function App() {
               <Route path="/organize-pdf"       element={<OrganizePDF />} />
               <Route path="/pdf-to-pdfa"        element={<PdfToPDFA />} />
               <Route path="/repair-pdf"         element={<RepairPdfPage />} />
-              <Route path="/page-numbers"       element={<PageNumbersPage />} />
+              <Route path="/page-numbers"       element={<PageNumbers />} />
               <Route path="/scan-to-pdf"        element={<ScanToPdfPage />} />
               <Route path="/compare-pdf"        element={<ComparePdfPage />} />
               <Route path="/redact-pdf"         element={<RedactPdfPage />} />
