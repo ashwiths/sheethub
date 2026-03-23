@@ -1,4 +1,3 @@
-import React from 'react';
 import ToolLayout from '../components/ToolLayout';
 
 export default function EditPdfPage() {
