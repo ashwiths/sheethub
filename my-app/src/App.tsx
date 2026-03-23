@@ -22,13 +22,10 @@ const PdfToWordPage       = lazy(() => import("./pages/PdfToWord"));
 const PdfToImagePage      = lazy(() => import("./pages/PdfToImagePage"));
 // @ts-ignore - Created as .jsx per requirements
 const WordToPDF           = lazy(() => import("./pages/WordToPDF"));
-const WatermarkPDFPage    = lazy(() => import("./pages/WatermarkPDFPage"));
-const OcrPDFPage          = lazy(() => import("./pages/OcrPDFPage"));
 // @ts-ignore - Created as .jsx per requirements
 const ProtectPDF          = lazy(() => import("./pages/ProtectPDF"));
 // @ts-ignore - Created as .jsx per requirements
 const UnlockPDF       = lazy(() => import("./pages/UnlockPDF"));
-const SignPDFPage         = lazy(() => import("./pages/SignPDFPage"));
 // New 17 tools
 // @ts-ignore - Created as .jsx per requirements
 const PdfToPpt = lazy(() => import("./pages/PdfToPpt"));
@@ -40,7 +37,6 @@ const PptToPdf            = lazy(() => import("./pages/PptToPdf"));
 const ExcelToPdf          = lazy(() => import("./pages/ExcelToPdf"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToJpg            = lazy(() => import("./pages/PdfToJpg"));
-const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const JpgToPdf            = lazy(() => import("./pages/JpgToPdf"));
 // @ts-ignore - Created as .jsx per requirements
@@ -50,16 +46,13 @@ const OrganizePDF         = lazy(() => import("./pages/OrganizePDF"));
 // @ts-ignore - Created as .jsx per requirements
 const PdfToPDFA           = lazy(() => import("./pages/PdfToPDFA"));
 const RepairPdfPage       = lazy(() => import("./pages/RepairPdfPage"));
+const EditPdfPage         = lazy(() => import("./pages/EditPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const PageNumbers         = lazy(() => import("./pages/PageNumbers"));
-const ScanToPdfPage       = lazy(() => import("./pages/ScanToPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const ComparePdf          = lazy(() => import("./pages/ComparePdf"));
-const RedactPdfPage       = lazy(() => import("./pages/RedactPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const CropPdf             = lazy(() => import("./pages/CropPdf"));
-const AiSummarizerPage    = lazy(() => import("./pages/AiSummarizerPage"));
-const TranslatePdfPage    = lazy(() => import("./pages/TranslatePdfPage"));
 
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -111,11 +104,8 @@ function App() {
               <Route path="/pdf-to-word"        element={<PdfToWordPage />} />
               <Route path="/pdf-to-image"       element={<PdfToImagePage />} />
               <Route path="/word-to-pdf"        element={<WordToPDF />} />
-              <Route path="/watermark-pdf"      element={<WatermarkPDFPage />} />
-              <Route path="/ocr-pdf"            element={<OcrPDFPage />} />
               <Route path="/protect-pdf"        element={<ProtectPDF />} />
               <Route path="/unlock-pdf"         element={<UnlockPDF />} />
-              <Route path="/sign-pdf"           element={<SignPDFPage />} />
               {/* New 17 routes */}
               <Route path="/pdf-to-powerpoint"  element={<PdfToPpt />} />
               <Route path="/pdf-to-ppt"         element={<PdfToPpt />} />
@@ -124,19 +114,15 @@ function App() {
               <Route path="/ppt-to-pdf"         element={<PptToPdf />} />
               <Route path="/excel-to-pdf"       element={<ExcelToPdf />} />
               <Route path="/pdf-to-jpg"         element={<PdfToJpg />} />
-              <Route path="/edit-pdf"           element={<EditPdfPage />} />
               <Route path="/jpg-to-pdf"         element={<JpgToPdf />} />
               <Route path="/html-to-pdf"        element={<HtmlToPdf />} />
               <Route path="/organize-pdf"       element={<OrganizePDF />} />
               <Route path="/pdf-to-pdfa"        element={<PdfToPDFA />} />
               <Route path="/repair-pdf"         element={<RepairPdfPage />} />
+              <Route path="/edit-pdf"           element={<EditPdfPage />} />
               <Route path="/page-numbers"       element={<PageNumbers />} />
-              <Route path="/scan-to-pdf"        element={<ScanToPdfPage />} />
               <Route path="/compare-pdf"        element={<ComparePdf />} />
-              <Route path="/redact-pdf"         element={<RedactPdfPage />} />
               <Route path="/crop-pdf"           element={<CropPdf />} />
-              <Route path="/ai-summarizer"      element={<AiSummarizerPage />} />
-              <Route path="/translate-pdf"      element={<TranslatePdfPage />} />
             </Routes>
           </Suspense>
         </main>
