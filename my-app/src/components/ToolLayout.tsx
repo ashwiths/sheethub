@@ -22,8 +22,11 @@ interface ToolLayoutProps {
   steps?: Step[];
   features?: string[];
   isSortable?: boolean;
+  layout?: "split" | "stack";
   renderConfiguration?: (files: UploadedFile[], setFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>) => React.ReactNode;
-  onProcess?: (files: File[]) => Promise<Blob>;
+  renderResult?: (resultData: any, reset: () => void) => React.ReactNode;
+  onProcess?: (files: File[]) => Promise<any>;
+  fullWidthResult?: boolean;
 }
 
 const defaultSteps = (_action: string): Step[] => [
@@ -71,8 +74,11 @@ export default function ToolLayout({
   steps,
   features = ["Preserves formatting", "No size limit (up to 100MB)", "Unlimited use"],
   isSortable = false,
+  layout = "split",
   renderConfiguration,
+  renderResult,
   onProcess,
+  fullWidthResult = false,
 }: ToolLayoutProps) {
   const tool = tools.find((t) => t.id === toolId);
   if (!tool) return null;
@@ -88,6 +94,7 @@ export default function ToolLayout({
   const [isDone, setIsDone] = useState(false);
   const [finalFileName, setFinalFileName] = useState<string | null>(null);
   const [fileBlob, setFileBlob] = useState<Blob | null>(null);
+  const [processResult, setProcessResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [customFileName, setCustomFileName] = useState("");
 
@@ -110,6 +117,7 @@ export default function ToolLayout({
     setIsDone(false);
     setFinalFileName(null);
     setFileBlob(null);
+    setProcessResult(null);
     setFiles([]);
     setError(null);
     setCustomFileName("");
@@ -121,40 +129,44 @@ export default function ToolLayout({
     setError(null);
 
     try {
-      let fileBlob: Blob;
+      let resultData: any;
       if (onProcess) {
-        fileBlob = await onProcess(files.map((f) => f.file));
+        resultData = await onProcess(files.map((f) => f.file));
       } else {
         await new Promise((r) => setTimeout(r, 2200));
-        fileBlob = new Blob(await Promise.all(files.map((f) => f.file.arrayBuffer())), {
+        resultData = new Blob(await Promise.all(files.map((f) => f.file.arrayBuffer())), {
           type: "application/pdf",
         });
       }
 
-      // Determine final filename
-      const ext = resolvedOutput.includes(".")
-        ? "." + resolvedOutput.split(".").pop()
-        : ".pdf";
-      const baseName = customFileName.trim() !== ""
-        ? customFileName.trim()
-        : resolvedOutput.includes(".")
-          ? resolvedOutput.substring(0, resolvedOutput.lastIndexOf("."))
-          : resolvedOutput;
-      const downloadName = `${baseName}${ext}`;
+      if (resultData instanceof Blob) {
+        // Determine final filename
+        const ext = resolvedOutput.includes(".")
+          ? "." + resolvedOutput.split(".").pop()
+          : ".pdf";
+        const baseName = customFileName.trim() !== ""
+          ? customFileName.trim()
+          : resolvedOutput.includes(".")
+            ? resolvedOutput.substring(0, resolvedOutput.lastIndexOf("."))
+            : resolvedOutput;
+        const downloadName = `${baseName}${ext}`;
 
-      // Auto-download
-      const url = URL.createObjectURL(fileBlob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = downloadName;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+        // Auto-download
+        const url = URL.createObjectURL(resultData);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = downloadName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
 
-      // Keep blob in state for fallback manual download
-      setFileBlob(fileBlob);
-      setFinalFileName(downloadName);
+        // Keep blob in state for fallback manual download
+        setFileBlob(resultData);
+        setFinalFileName(downloadName);
+      }
+
+      setProcessResult(resultData);
       setIsDone(true);
     } catch (e: any) {
       console.error("Processing failed", e);
@@ -220,22 +232,28 @@ export default function ToolLayout({
         >
           <AnimatePresence mode="wait">
             {isDone ? (
-              <div className="max-w-2xl mx-auto">
-                <SuccessCard
-                  key="success"
-                  fileName={finalFileName ?? resolvedOutput}
-                  onReset={handleReset}
-                  onDownload={fileBlob ? () => {
-                    const url = URL.createObjectURL(fileBlob!);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = finalFileName ?? resolvedOutput;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    URL.revokeObjectURL(url);
-                  } : undefined}
-                />
+              <div className={fullWidthResult ? "w-full px-4" : "max-w-4xl mx-auto w-full"}>
+                {renderResult ? (
+                  renderResult(processResult, handleReset)
+                ) : (
+                  <div className="max-w-2xl mx-auto">
+                    <SuccessCard
+                      key="success"
+                      fileName={finalFileName ?? resolvedOutput}
+                      onReset={handleReset}
+                      onDownload={fileBlob ? () => {
+                        const url = URL.createObjectURL(fileBlob!);
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = finalFileName ?? resolvedOutput;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        URL.revokeObjectURL(url);
+                      } : undefined}
+                    />
+                  </div>
+                )}
               </div>
             ) : files.length === 0 ? (
               /* Centered layout when empty */
@@ -247,15 +265,15 @@ export default function ToolLayout({
                 </div>
               </div>
             ) : (
-              /* Side-by-side Layout after upload */
+              /* Dynamic Layout based on 'layout' prop */
               <motion.div
                 key="workspace"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start"
+                className={layout === "split" ? "grid lg:grid-cols-12 gap-6 lg:gap-8 items-start" : "flex flex-col gap-8"}
               >
-                {/* Left Column: Files */}
-                <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+                {/* Left Column / Top Section: Files */}
+                <div className={layout === "split" ? "lg:col-span-7 xl:col-span-8 space-y-4" : "w-full space-y-4"}>
                   <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 border border-gray-100 shadow-xl shadow-gray-200/40 min-h-[200px] flex flex-col">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-bold text-gray-900">Your Files</h3>
@@ -278,8 +296,8 @@ export default function ToolLayout({
                   </div>
                 </div>
 
-                {/* Right Column: Configuration & Submit */}
-                <div className="lg:col-span-5 xl:col-span-4 sticky top-24">
+                {/* Right Column / Bottom Section: Configuration & Submit */}
+                <div className={layout === "split" ? "lg:col-span-5 xl:col-span-4 sticky top-24" : "w-full"}>
                   <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-2xl shadow-indigo-100/50">
                     <h3 className="text-xl font-extrabold text-gray-900 mb-6 pb-4 border-b border-gray-100">
                       Options

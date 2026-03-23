@@ -53,9 +53,11 @@ const RepairPdfPage       = lazy(() => import("./pages/RepairPdfPage"));
 // @ts-ignore - Created as .jsx per requirements
 const PageNumbers         = lazy(() => import("./pages/PageNumbers"));
 const ScanToPdfPage       = lazy(() => import("./pages/ScanToPdfPage"));
-const ComparePdfPage      = lazy(() => import("./pages/ComparePdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const ComparePdf          = lazy(() => import("./pages/ComparePdf"));
 const RedactPdfPage       = lazy(() => import("./pages/RedactPdfPage"));
-const CropPdfPage         = lazy(() => import("./pages/CropPdfPage"));
+// @ts-ignore - Created as .jsx per requirements
+const CropPdf             = lazy(() => import("./pages/CropPdf"));
 const AiSummarizerPage    = lazy(() => import("./pages/AiSummarizerPage"));
 const TranslatePdfPage    = lazy(() => import("./pages/TranslatePdfPage"));
 
@@ -130,9 +132,9 @@ function App() {
               <Route path="/repair-pdf"         element={<RepairPdfPage />} />
               <Route path="/page-numbers"       element={<PageNumbers />} />
               <Route path="/scan-to-pdf"        element={<ScanToPdfPage />} />
-              <Route path="/compare-pdf"        element={<ComparePdfPage />} />
+              <Route path="/compare-pdf"        element={<ComparePdf />} />
               <Route path="/redact-pdf"         element={<RedactPdfPage />} />
-              <Route path="/crop-pdf"           element={<CropPdfPage />} />
+              <Route path="/crop-pdf"           element={<CropPdf />} />
               <Route path="/ai-summarizer"      element={<AiSummarizerPage />} />
               <Route path="/translate-pdf"      element={<TranslatePdfPage />} />
             </Routes>

@@ -24,6 +24,8 @@ const { organizePdf } = require("../controllers/organizePdfController");
 const { pdfToPDFA } = require("../controllers/pdfToPDFAController");
 const { repairPdf } = require("../controllers/repairPdfController");
 const { addPageNumbers } = require("../controllers/pageNumberController");
+const { comparePdf } = require("../controllers/comparePdfController");
+const { cropFile } = require("../controllers/cropController");
 
 console.log("PDF routes loaded");
 
@@ -85,5 +87,11 @@ router.post("/repair-pdf", upload.single("file"), repairPdf);
 
 // POST /api/pdf/page-numbers - Add Page Numbers
 router.post("/page-numbers", upload.single("file"), addPageNumbers);
+
+// POST /api/pdf/compare-pdf - Compare PDFs
+router.post("/compare-pdf", upload.array("files", 2), comparePdf);
+
+// POST /api/pdf/crop - Crop File
+router.post("/crop", upload.single("file"), cropFile);
 
 module.exports = router;
