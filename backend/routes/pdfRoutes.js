@@ -27,7 +27,7 @@ const { addPageNumbers } = require("../controllers/pageNumberController");
 const { comparePdf } = require("../controllers/comparePdfController");
 const { cropFile } = require("../controllers/cropController");
 
-console.log("PDF routes mounted at /api/pdf");
+console.log("PDF routes loaded");
 
 // PDF routes
 

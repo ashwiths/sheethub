@@ -22,12 +22,7 @@ const app = express();
 
 // CORS
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://sheethub.bluelabtech.space"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: "*"
 }));
 
 // Body parser
@@ -67,20 +62,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server started");
   console.log(`Server running on port ${PORT}`);
-  console.log("PDF routes mounted at /api/pdf");
-  console.log('--- REGISTERED API ROUTES ---');
-  app._router.stack.forEach((middleware) => {
-    if (middleware.name === 'router') {
-      middleware.handle.stack.forEach((handler) => {
-        if (handler.route) {
-          const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
-          console.log(`[ROUTE] ${methods} /api/pdf${handler.route.path}`);
-        }
-      });
-    } else if (middleware.route) {
-      const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
-      console.log(`[ROUTE] ${methods} ${middleware.route.path}`);
-    }
-  });
-  console.log('-----------------------------');
 });
