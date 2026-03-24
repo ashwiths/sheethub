@@ -20,7 +20,7 @@ exports.pdfToPDFA = (req, res) => {
     exec(command, (error, stdout, stderr) => {
       // Allow execution to succeed if there are non-fatal warnings as long as the file is created
       if (error && !fs.existsSync(outputPath)) {
-        console.error("GS ERROR:", stderr);
+        console.error("GS ERROR:", stderr?.stack || stderr);
         return res.status(500).json({
           error: "PDF/A conversion failed",
           details: stderr,
@@ -40,7 +40,7 @@ exports.pdfToPDFA = (req, res) => {
     });
 
   } catch (err) {
-    console.error("SERVER ERROR:", err);
+    console.error("SERVER ERROR:", err?.stack || err);
     res.status(500).json({ error: "Server error" });
   }
 };

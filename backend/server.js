@@ -52,8 +52,8 @@ app.get("/api/health", (req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Server error" });
+  console.error("Error:", err?.stack || err);
+  res.status(500).json({ error: "Internal Server Error" });
 });
 
 // PORT (IMPORTANT for Render)

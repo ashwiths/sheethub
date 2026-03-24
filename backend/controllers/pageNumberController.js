@@ -41,7 +41,7 @@ exports.addPageNumbers = async (req, res) => {
     res.send(Buffer.from(finalPdf)); 
 
   } catch (error) { 
-    console.error("PAGE NUMBER ERROR:", error); 
+    console.error("PAGE NUMBER ERROR:", error?.stack || error); 
     res.status(500).json({ 
       error: "Failed to add page numbers", 
       message: error.message, 
@@ -51,7 +51,7 @@ exports.addPageNumbers = async (req, res) => {
       try {
         fs.unlinkSync(req.file.path);
       } catch (cleanupError) {
-        console.error("Failed to clean up file:", cleanupError);
+        console.error("Failed to clean up file:", cleanupError?.stack || cleanupError);
       }
     }
   }

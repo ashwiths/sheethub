@@ -34,7 +34,7 @@ exports.organizePdf = async (req, res) => {
     fs.unlinkSync(req.file.path);
 
   } catch (error) {
-    console.error("ORGANIZE PDF ERROR:", error);
+    console.error("ORGANIZE PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Failed to organize PDF",
       message: error.message,

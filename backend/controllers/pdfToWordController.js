@@ -60,7 +60,7 @@ exports.pdfToWord = async (req, res) => {
     // Send file and perform cleanup
     res.download(outputPath, "converted.docx", (err) => {
       if (err) {
-        console.error("Error downloading file:", err);
+        console.error("Error downloading file:", err?.stack || err);
       }
 
       // Delete uploaded file and output file after response
@@ -68,12 +68,12 @@ exports.pdfToWord = async (req, res) => {
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         if (outputPath && fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
       } catch (cleanupError) {
-        console.error("Error during cleanup:", cleanupError);
+        console.error("Error during cleanup:", cleanupError?.stack || cleanupError);
       }
     });
 
   } catch (error) {
-    console.error("PDF TO WORD ERROR:", error);
+    console.error("PDF TO WORD ERROR:", error?.stack || error);
 
     // Cleanup input file if something fails
     if (req.file && fs.existsSync(req.file.path)) {

@@ -42,22 +42,22 @@ exports.compressPDF = async (req, res) => {
     // Send the compressed file back and clean up immediately after
     res.download(outputPath, 'compressed.pdf', (err) => {
       if (err) {
-        console.error('Error sending compressed file:', err);
+        console.error('Error sending compressed file:', err?.stack || err);
       }
       
       // Delete uploaded file after processing
       fs.unlink(inputPath, (unlinkErr) => {
-        if (unlinkErr) console.error('Failed to delete uploaded PDF:', unlinkErr);
+        if (unlinkErr) console.error('Failed to delete uploaded PDF:', unlinkErr?.stack || unlinkErr);
       });
       
       // Delete the generated compressed file
       fs.unlink(outputPath, (unlinkErr) => {
-        if (unlinkErr) console.error('Failed to delete output PDF:', unlinkErr);
+        if (unlinkErr) console.error('Failed to delete output PDF:', unlinkErr?.stack || unlinkErr);
       });
     });
 
   } catch (error) {
-    console.error('Compression Error:', error);
+    console.error('Compression Error:', error?.stack || error);
     
     // Clean up temporary files quietly upon an error execution
     if (req.file && fs.existsSync(req.file.path)) {

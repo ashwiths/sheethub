@@ -75,7 +75,7 @@ exports.pdfToPpt = async (req, res) => {
     // Send response and cleanup
     res.download(pptxOutputPath, "converted.pptx", (err) => {
       if (err) {
-        console.error("Download Error:", err);
+        console.error("Download Error:", err?.stack || err);
       }
       
       // Cleanup logic
@@ -91,12 +91,12 @@ exports.pdfToPpt = async (req, res) => {
           fs.rmdirSync(outputImagesDir);
         }
       } catch (cleanupError) {
-        console.error("Cleanup error after download:", cleanupError);
+        console.error("Cleanup error after download:", cleanupError?.stack || cleanupError);
       }
     });
 
   } catch (error) {
-    console.error("PDF TO PPT ERROR:", error);
+    console.error("PDF TO PPT ERROR:", error?.stack || error);
 
     // Error Rollback cleanups
     if (req.file && fs.existsSync(req.file.path)) {

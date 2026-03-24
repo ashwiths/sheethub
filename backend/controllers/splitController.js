@@ -85,7 +85,7 @@ exports.splitPDF = async (req, res) => {
     // Send the file and trigger cleanup AFTER sending
     res.download(outputPath, 'split.pdf', async (err) => {
       if (err) {
-        console.error('Error sending file to client:', err);
+        console.error('Error sending file to client:', err?.stack || err);
       }
       
       // Delete uploaded file inside the callback AFTER response
@@ -99,7 +99,7 @@ exports.splitPDF = async (req, res) => {
 
   } catch (error) {
     // 5. Error Handling
-    console.error('Split PDF Error:', error);
+    console.error('Split PDF Error:', error?.stack || error);
     
     // Clean up files safely on exception
     if (req.file) {

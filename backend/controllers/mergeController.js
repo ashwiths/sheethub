@@ -31,19 +31,19 @@ const mergePDFs = async (req, res) => {
     // Clean up uploaded files
     filePaths.forEach((filePath) => {
       fs.unlink(filePath, (err) => {
-        if (err) console.error('Error deleting temp file:', err);
+        if (err) console.error('Error deleting temp file:', err?.stack || err);
       });
     });
 
     res.download(outputPath, outputFileName, (err) => {
       if (err) {
-        console.error('Error sending file:', err);
+        console.error('Error sending file:', err?.stack || err);
       }
       // Clean up output file after sending
       fs.unlink(outputPath, () => {});
     });
   } catch (error) {
-    console.error('Merge error:', error);
+    console.error('Merge error:', error?.stack || error);
     res.status(500).json({ error: 'Failed to merge PDFs.' });
   }
 };

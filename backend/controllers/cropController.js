@@ -77,7 +77,7 @@ exports.cropFile = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("CROP ERROR:", error);
+    console.error("CROP ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Crop failed",
       message: error.message,

@@ -44,12 +44,12 @@ exports.jpgToPdf = async (req, res) => {
       try {
         fs.unlinkSync(file.path);
       } catch (e) {
-        console.error("Cleanup error:", e);
+        console.error("Cleanup error:", e?.stack || e);
       }
     });
 
   } catch (error) {
-    console.error("JPG TO PDF ERROR:", error);
+    console.error("JPG TO PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Conversion failed",
       message: error.message,

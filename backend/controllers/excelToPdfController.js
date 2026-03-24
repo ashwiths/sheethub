@@ -24,7 +24,7 @@ exports.excelToPdf = async (req, res) => {
 
     exec(command, (error, stdout, stderr) => {
       if (error) {
-        console.error("Conversion error:", error);
+        console.error("Conversion error:", error?.stack || error);
         return res.status(500).json({
           error: "Conversion failed",
           message: error.message,
@@ -49,17 +49,17 @@ exports.excelToPdf = async (req, res) => {
           fs.unlinkSync(inputPath);
           fs.unlinkSync(outputPath);
         } catch (cleanupError) {
-          console.error("Cleanup error:", cleanupError);
+          console.error("Cleanup error:", cleanupError?.stack || cleanupError);
         }
 
         if (err) {
-          console.error("Download error:", err);
+          console.error("Download error:", err?.stack || err);
         }
       });
     });
 
   } catch (error) {
-    console.error("EXCEL TO PDF ERROR:", error);
+    console.error("EXCEL TO PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Conversion failed",
       message: error.message,

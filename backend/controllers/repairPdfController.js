@@ -23,7 +23,7 @@ exports.repairPdf = (req, res) => {
 
       // 🔥 KEY FIX: ignore warnings if output exists
       if (!fs.existsSync(outputPath)) {
-        console.error("QPDF FAILED:", stderr);
+        console.error("QPDF FAILED:", stderr?.stack || stderr);
 
         return res.status(500).json({
           error: "Repair failed",
@@ -38,13 +38,13 @@ exports.repairPdf = (req, res) => {
           if (fs.existsSync(inputPath)) fs.unlinkSync(inputPath);
           if (fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
         } catch (cleanupErr) {
-          console.error("Error during cleanup:", cleanupErr);
+          console.error("Error during cleanup:", cleanupErr?.stack || cleanupErr);
         }
       });
     });
 
   } catch (err) {
-    console.error("SERVER ERROR:", err);
+    console.error("SERVER ERROR:", err?.stack || err);
     res.status(500).json({ error: "Server error" });
   }
 };

@@ -25,7 +25,7 @@ exports.wordToPdf = (req, res) => {
     exec(command, (error) => {
 
       if (error) {
-        console.error("Conversion error:", error);
+        console.error("Conversion error:", error?.stack || error);
 
         // cleanup input file
         try { fs.unlinkSync(inputPath); } catch {}
@@ -52,7 +52,7 @@ exports.wordToPdf = (req, res) => {
 
   } catch (err) {
 
-    console.error("WORD TO PDF ERROR:", err);
+    console.error("WORD TO PDF ERROR:", err?.stack || err);
 
     return res.status(500).json({
       error: "Conversion failed",

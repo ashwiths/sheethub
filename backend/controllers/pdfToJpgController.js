@@ -46,7 +46,7 @@ exports.pdfToJpg = async (req, res) => {
         try { fs.unlinkSync(singleImagePath); } catch (e) {}
         try { fs.rmdirSync(outputDir); } catch (e) {}
         
-        if (err) console.error("Download error:", err);
+        if (err) console.error("Download error:", err?.stack || err);
       });
     } else {
       // Multiple pages -> Zip directly to response
@@ -71,7 +71,7 @@ exports.pdfToJpg = async (req, res) => {
           files.forEach(f => fs.unlinkSync(path.join(outputDir, f)));
           fs.rmdirSync(outputDir);
         } catch (e) {
-          console.error("Cleanup error:", e);
+          console.error("Cleanup error:", e?.stack || e);
         }
       });
 
@@ -79,7 +79,7 @@ exports.pdfToJpg = async (req, res) => {
     }
 
   } catch (error) {
-    console.error("PDF TO JPG ERROR:", error);
+    console.error("PDF TO JPG ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Conversion failed",
       message: error.message,

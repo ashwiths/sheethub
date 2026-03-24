@@ -36,7 +36,7 @@ exports.protectPdf = (req, res) => {
     exec(repairCommand, (repairError, stdout, stderr) => {
       // qpdf exits with code 3 for warnings but still successfully outputs the file.
       if (repairError && repairError.code !== 3 && !fs.existsSync(repairPath)) {
-        console.error("REPAIR ERROR:", stderr);
+        console.error("REPAIR ERROR:", stderr?.stack || stderr);
         return res.status(500).json({ error: "PDF repair failed" });
       }
 
@@ -45,7 +45,7 @@ exports.protectPdf = (req, res) => {
       exec(encryptCommand, (encryptError, stdout2, stderr2) => {
         // Again, ignore code 3 if the output file is generated
         if (encryptError && encryptError.code !== 3 && !fs.existsSync(outputPath)) {
-          console.error("ENCRYPT ERROR:", stderr2);
+          console.error("ENCRYPT ERROR:", stderr2?.stack || stderr2);
           return res.status(500).json({ error: "Encryption failed" });
         }
 
@@ -68,7 +68,7 @@ exports.protectPdf = (req, res) => {
     });
 
   } catch (err) {
-    console.error("SERVER ERROR:", err);
+    console.error("SERVER ERROR:", err?.stack || err);
     res.status(500).json({ error: "Server error" });
   }
 };

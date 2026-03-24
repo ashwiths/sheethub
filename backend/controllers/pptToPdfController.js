@@ -23,7 +23,7 @@ exports.pptToPdf = async (req, res) => {
 
     exec(command, (error, stdout, stderr) => {
       if (error) {
-        console.error("Conversion error:", error);
+        console.error("Conversion error:", error?.stack || error);
         return res.status(500).json({
           error: "Conversion failed",
           message: error.message,
@@ -48,13 +48,13 @@ exports.pptToPdf = async (req, res) => {
         fs.unlinkSync(outputPath);
 
         if (err) {
-          console.error("Download error:", err);
+          console.error("Download error:", err?.stack || err);
         }
       });
     });
 
   } catch (error) {
-    console.error("PPT TO PDF ERROR:", error);
+    console.error("PPT TO PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Conversion failed",
       message: error.message,

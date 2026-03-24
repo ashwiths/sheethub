@@ -86,7 +86,7 @@ exports.editPdf = async (req, res) => {
     try { fs.unlinkSync(inputPath); } catch (e) {}
 
   } catch (error) {
-    console.error("EDIT PDF ERROR:", error);
+    console.error("EDIT PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Failed to edit PDF",
       message: error.message,

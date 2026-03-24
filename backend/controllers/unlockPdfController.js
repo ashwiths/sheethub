@@ -26,7 +26,7 @@ exports.unlockPdf = (req, res) => {
     exec(command, (error, stdout, stderr) => {
       // Safely ignore code 3 (warnings) if the output file was generated successfully
       if (error && (error.code !== 3 || !fs.existsSync(outputPath))) {
-        console.error("QPDF ERROR:", stderr);
+        console.error("QPDF ERROR:", stderr?.stack || stderr);
 
         // Wrong password handling
         if (stderr.includes("invalid password")) {
@@ -55,7 +55,7 @@ exports.unlockPdf = (req, res) => {
     });
 
   } catch (err) {
-    console.error("SERVER ERROR:", err);
+    console.error("SERVER ERROR:", err?.stack || err);
     res.status(500).json({ error: "Server error" });
   }
 };

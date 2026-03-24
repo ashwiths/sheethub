@@ -35,7 +35,7 @@ exports.comparePdf = async (req, res) => {
     fs.unlinkSync(req.files[1].path);
 
   } catch (error) {
-    console.error("COMPARE ERROR:", error);
+    console.error("COMPARE ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Comparison failed",
       message: error.message

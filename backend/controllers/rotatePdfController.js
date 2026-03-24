@@ -33,7 +33,7 @@ exports.rotatePdf = async (req, res) => {
     try { fs.unlinkSync(req.file.path); } catch (e) {}
 
   } catch (error) {
-    console.error("ROTATE PDF ERROR:", error);
+    console.error("ROTATE PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Rotation failed",
       message: error.message,

@@ -44,18 +44,18 @@ exports.pdfToExcel = async (req, res) => {
     XLSX.writeFile(workbook, outputPath);
 
     res.download(outputPath, "converted.xlsx", (err) => {
-      if (err) console.error("Error downloading Excel file:", err);
+      if (err) console.error("Error downloading Excel file:", err?.stack || err);
 
       try {
         if (fs.existsSync(inputPath)) fs.unlinkSync(inputPath);
         if (outputPath && fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
       } catch (cleanupError) {
-        console.error("Cleanup error after download:", cleanupError);
+        console.error("Cleanup error after download:", cleanupError?.stack || cleanupError);
       }
     });
 
   } catch (error) {
-    console.error("PDF TO EXCEL ERROR:", error);
+    console.error("PDF TO EXCEL ERROR:", error?.stack || error);
 
     // Rollback uploaded file
     if (req.file && fs.existsSync(req.file.path)) {

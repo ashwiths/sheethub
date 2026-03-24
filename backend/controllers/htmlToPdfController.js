@@ -40,7 +40,7 @@ exports.htmlToPdf = async (req, res) => {
     res.send(pdfBuffer);
 
   } catch (error) {
-    console.error("HTML TO PDF ERROR:", error);
+    console.error("HTML TO PDF ERROR:", error?.stack || error);
     res.status(500).json({
       error: "Conversion failed",
       message: error.message,
