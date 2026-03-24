@@ -27,7 +27,7 @@ const { addPageNumbers } = require("../controllers/pageNumberController");
 const { comparePdf } = require("../controllers/comparePdfController");
 const { cropFile } = require("../controllers/cropController");
 
-console.log("PDF routes loaded");
+console.log("PDF routes loaded successfully");
 
 // PDF routes
 
