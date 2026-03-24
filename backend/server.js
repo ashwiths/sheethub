@@ -8,7 +8,15 @@ process.on('unhandledRejection', (reason, promise) => {
 
 const express = require("express");
 const cors = require("cors");
+const { execSync } = require("child_process");
 const pdfRoutes = require("./routes/pdfRoutes");
+
+let commitHash = 'unknown';
+try {
+  commitHash = execSync('git rev-parse HEAD').toString().trim();
+} catch (e) {
+  // Ignore if not a git repo
+}
 
 const app = express();
 
@@ -29,6 +37,19 @@ app.use("/api/pdf", pdfRoutes);
 // Health check
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
+});
+
+// Detailed API Health check
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Backend is running smoothly 🚀",
+    commit: commitHash,
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memoryUsage: process.memoryUsage(),
+    env: process.env.NODE_ENV || "development",
+  });
 });
 
 // Error handler
