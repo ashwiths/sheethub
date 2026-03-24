@@ -28,7 +28,7 @@ export default function SplitPDF() {
 
     try {
       // 4. Call API using fetch
-      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/split`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/split`, {
         method: "POST",
         body: formData,
       });

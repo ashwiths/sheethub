@@ -12,7 +12,7 @@ export default function JpgToPdf() {
       formData.append("file", f.file || f);
     });
 
-    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/jpg-to-pdf`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/jpg-to-pdf`, {
       method: "POST",
       body: formData,
     });

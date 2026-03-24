@@ -27,7 +27,7 @@ const { addPageNumbers } = require("../controllers/pageNumberController");
 const { comparePdf } = require("../controllers/comparePdfController");
 const { cropFile } = require("../controllers/cropController");
 
-console.log("PDF routes loaded successfully");
+console.log("PDF routes mounted at /api/pdf");
 
 // PDF routes
 
@@ -71,19 +71,19 @@ router.post("/rotate-pdf", upload.single("file"), rotatePdf);
 // router.post("/html-to-pdf", express.json(), htmlToPdf);
 
 // POST /api/pdf/protect-pdf - Protect PDF
-router.post("/protect-pdf", upload.single("file"), protectPdf);
+router.post("/protect", upload.single("file"), protectPdf);
 
 // POST /api/pdf/unlock-pdf - Unlock PDF
-router.post("/unlock-pdf", upload.single("file"), unlockPdf);
+router.post("/unlock", upload.single("file"), unlockPdf);
 
 // POST /api/pdf/organize-pdf - Organize PDF
-router.post("/organize-pdf", upload.single("file"), organizePdf);
+router.post("/organize", upload.single("file"), organizePdf);
 
 // POST /api/pdf/pdf-to-pdfa - Convert PDF to PDF/A
 router.post("/pdf-to-pdfa", upload.single("file"), pdfToPDFA);
 
 // POST /api/pdf/repair-pdf - Repair PDF
-router.post("/repair-pdf", upload.single("file"), repairPdf);
+router.post("/repair", upload.single("file"), repairPdf);
 
 // POST /api/pdf/page-numbers - Add Page Numbers
 router.post("/page-numbers", upload.single("file"), addPageNumbers);

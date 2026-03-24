@@ -36,7 +36,7 @@ app.use("/api/pdf", pdfRoutes);
 
 // Health check
 app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
+  res.send("Backend running");
 });
 
 // Detailed API Health check

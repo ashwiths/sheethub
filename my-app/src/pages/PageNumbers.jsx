@@ -14,7 +14,7 @@ export default function PageNumbers() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/page-numbers`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/page-numbers`, {
         method: "POST",
         body: formData,
       });

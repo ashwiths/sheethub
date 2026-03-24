@@ -204,7 +204,7 @@ export default function OrganizePDF() {
       formData.append("file", file);
       formData.append("order", JSON.stringify(order));
 
-      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/organize-pdf`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/organize`, {
         method: "POST",
         body: formData,
       });

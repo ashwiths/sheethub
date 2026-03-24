@@ -14,7 +14,7 @@ export default function PdfToPDFA() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/pdf-to-pdfa`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/pdf-to-pdfa`, {
         method: "POST",
         body: formData,
       });

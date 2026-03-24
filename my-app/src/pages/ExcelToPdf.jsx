@@ -12,7 +12,7 @@ export default function ExcelToPdf() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/excel-to-pdf`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/pdf/excel-to-pdf`, {
       method: "POST",
       body: formData,
     });
