@@ -63,4 +63,21 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  
+  // Log all registered routes for debugging (Requested in task)
+  console.log('--- REGISTERED API ROUTES ---');
+  app._router.stack.forEach((middleware) => {
+    if (middleware.name === 'router') {
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          const methods = Object.keys(handler.route.methods).join(', ').toUpperCase();
+          console.log(`[ROUTE] ${methods} /api/pdf${handler.route.path}`);
+        }
+      });
+    } else if (middleware.route) {
+      const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
+      console.log(`[ROUTE] ${methods} ${middleware.route.path}`);
+    }
+  });
+  console.log('-----------------------------');
 });

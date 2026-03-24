@@ -21,9 +21,6 @@ export const mergePDFs = async (files: File[]): Promise<Blob> => {
 
   try {
     const response = await axios.post(`${API_URL}/merge`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       // Receive the file as a Blob
       responseType: 'blob',
     });
@@ -62,9 +59,6 @@ export const splitPDF = async (file: File, pages: string): Promise<Blob> => {
 
   try {
     const response = await axios.post(`${API_URL}/split`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       responseType: 'blob',
     });
 
