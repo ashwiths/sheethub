@@ -16,7 +16,7 @@ export default function RotatePDF() {
     formData.append("file", file);
     formData.append("angle", angle.toString());
 
-    const response = await fetch("http://localhost:5000/api/pdf/rotate-pdf", {
+    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/rotate-pdf`, {
       method: "POST",
       body: formData,
     });

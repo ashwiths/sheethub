@@ -44,7 +44,7 @@ export default function HtmlToPdf() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/pdf/html-to-pdf", {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/html-to-pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(mode === "html" ? { html: htmlContent } : { url: inputUrl }),

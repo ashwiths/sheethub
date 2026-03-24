@@ -9,7 +9,7 @@ export default function RepairPdfPage() {
     const formData = new FormData();
     formData.append("file", files[0]);
 
-    const response = await fetch("http://localhost:5000/api/pdf/repair-pdf", {
+    const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/repair-pdf`, {
       method: "POST",
       body: formData,
     });

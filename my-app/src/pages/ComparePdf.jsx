@@ -134,7 +134,7 @@ export default function ComparePdf() {
     formData.append("files", file1);
     formData.append("files", file2);
 
-    const res = await fetch("http://localhost:5000/api/pdf/compare-pdf", {
+    const res = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/compare-pdf`, {
       method: "POST",
       body: formData,
     });

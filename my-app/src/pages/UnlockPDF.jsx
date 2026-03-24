@@ -22,7 +22,7 @@ export default function UnlockPDF() {
     formData.append("password", password);
 
     try {
-      const response = await fetch("http://localhost:5000/api/pdf/unlock-pdf", {
+      const response = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/unlock-pdf`, {
         method: "POST",
         body: formData,
       });

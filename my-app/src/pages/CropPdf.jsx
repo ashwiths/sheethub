@@ -220,7 +220,7 @@ export default function CropPdf() {
     formData.append("width", Math.round(finalW));
     formData.append("height", Math.round(finalH));
 
-    const res = await fetch("http://localhost:5000/api/pdf/crop", {
+    const res = await fetch(`\${import.meta.env.VITE_API_URL}/api/pdf/crop`, {
       method: "POST",
       body: formData,
     });
