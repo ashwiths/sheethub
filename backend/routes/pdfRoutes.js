@@ -32,6 +32,7 @@ console.log("PDF routes loaded");
 // PDF routes
 
 // POST /api/pdf/merge - Merge multiple PDFs (max 10)
+router.get('/merge', (req, res) => res.send("MERGE API IS RUNNING PERFECTLY!"));
 router.post('/merge', upload.array('files', 10), mergeController.mergePDFs);
 
 // POST /api/pdf/split - Split a single PDF
